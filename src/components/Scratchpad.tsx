@@ -50,7 +50,7 @@ export default function Scratchpad({ draft, onUpdateDraft, isOpen, onClose }: Sc
           placeholder="Jot down unformatted, spontaneous thoughts here..."
           className="flex-1 w-full bg-slate-950 text-slate-200 border border-slate-800 focus:border-teal-500 focus:ring-1 focus:ring-teal-500 rounded-lg p-3 text-sm font-sans resize-none"
         />
-        <div className="absolute bottom-6 right-6 text-[11px] text-slate-500 font-mono">
+        <div className="absolute bottom-6 right-6 text-[11px] text-slate-500 font-sans">
           {content.trim().split(/\s+/).filter(w => w.length > 0).length} words
         </div>
       </div>

@@ -3,300 +3,372 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { PromptField, AntiPatternCard, GuideChapter } from './types';
+import { PromptField, AntiPatternCard, GuideChapter, NarrativePattern } from './types';
+
+export const NARRATIVE_PATTERNS: NarrativePattern[] = [
+  {
+    id: "hj-chronological",
+    name: "Chronological",
+    description: "The classic timeline. You start in your comfort zone, get pulled into a new challenge, and face your ordeal at the climax.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "ordinary_world", label: "The Ordinary World", targetRangePercentage: [5, 10] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [5, 8] },
+      { promptId: "hesitation_doubt", label: "The Hesitation", targetRangePercentage: [5, 8] },
+      { promptId: "crossing_threshold", label: "The Commitment", targetRangePercentage: [5, 8] },
+      { promptId: "special_world", label: "The Unfamiliar World", targetRangePercentage: [10, 14] },
+      { promptId: "stakes_risk", label: "The Stakes", targetRangePercentage: [5, 7] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [15, 18] },
+      { promptId: "the_catalyst", label: "The Internal Catalyst", targetRangePercentage: [5, 8] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [10, 14] },
+      { promptId: "the_payoff", label: "The Payoff", targetRangePercentage: [5, 7] },
+      { promptId: "essential_belief", label: "The Elixir", targetRangePercentage: [5, 10] },
+      { promptId: "magic_elixir", label: "Applying the Elixir", targetRangePercentage: [5, 8] }
+    ]
+  },
+  {
+    id: "hj-in-media-res",
+    name: "In Media Res",
+    description: "Start right in the middle of the chaos. Open with your biggest complication, then flash back to how you got there.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "the_ordeal", label: "The Hook (The Ordeal)", targetRangePercentage: [15, 18] },
+      { promptId: "ordinary_world", label: "Flashback: The Ordinary World", targetRangePercentage: [5, 10] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [5, 8] },
+      { promptId: "hesitation_doubt", label: "The Hesitation", targetRangePercentage: [5, 8] },
+      { promptId: "crossing_threshold", label: "The Commitment", targetRangePercentage: [5, 8] },
+      { promptId: "special_world", label: "The Unfamiliar World", targetRangePercentage: [10, 14] },
+      { promptId: "stakes_risk", label: "The Stakes", targetRangePercentage: [5, 7] },
+      { promptId: "the_catalyst", label: "The Internal Catalyst", targetRangePercentage: [5, 8] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [10, 14] },
+      { promptId: "the_payoff", label: "The Payoff", targetRangePercentage: [5, 7] },
+      { promptId: "essential_belief", label: "The Elixir", targetRangePercentage: [5, 10] },
+      { promptId: "magic_elixir", label: "Applying the Elixir", targetRangePercentage: [5, 8] }
+    ]
+  },
+  {
+    id: "hj-post-mortem",
+    name: "The Post-Mortem (Failed Ordeal First)",
+    description: "Opens with the aftermath of failure.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "the_ordeal", label: "The Failed Ordeal", targetRangePercentage: [15, 20] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [10, 15] },
+      { promptId: "crossing_threshold", label: "The Commitment", targetRangePercentage: [10, 15] },
+      { promptId: "special_world", label: "The Unfamiliar World", targetRangePercentage: [15, 20] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [15, 20] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  },
+  {
+    id: "hj-catalyst-anchor",
+    name: "The Catalyst Anchor (The Object Lesson)",
+    description: "Opens with a hyper-focus on a specific object or memory.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "the_catalyst", label: "The Internal Catalyst", targetRangePercentage: [10, 15] },
+      { promptId: "ordinary_world", label: "The Ordinary World", targetRangePercentage: [10, 15] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [10, 15] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [15, 20] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [15, 20] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  },
+  {
+    id: "hj-reluctant-hook",
+    name: "The Reluctant Hook (Starting with Hesitation)",
+    description: "Starts at the moment of maximum internal resistance.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "hesitation_doubt", label: "The Hesitation", targetRangePercentage: [10, 15] },
+      { promptId: "ordinary_world", label: "The Ordinary World", targetRangePercentage: [10, 15] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [10, 15] },
+      { promptId: "crossing_threshold", label: "The Commitment", targetRangePercentage: [10, 15] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [20, 25] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  },
+  {
+    id: "hj-parallel-track",
+    name: "The Parallel Track (Dual Timeline)",
+    description: "Alternates environments.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "ordinary_world", label: "The Ordinary World", targetRangePercentage: [10, 15] },
+      { promptId: "special_world", label: "The Unfamiliar World", targetRangePercentage: [15, 20] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [10, 15] },
+      { promptId: "stakes_risk", label: "The Stakes", targetRangePercentage: [10, 15] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [15, 20] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [10, 15] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  },
+  {
+    id: "hj-sudden-setback",
+    name: "Sudden Setback",
+    description: "A character falls into a crisis and claws their way out.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "ordinary_world", label: "The Ordinary World", targetRangePercentage: [10, 15] },
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [10, 15] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [20, 25] },
+      { promptId: "the_catalyst", label: "The Internal Catalyst", targetRangePercentage: [10, 15] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [15, 20] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  },
+  {
+    id: "hj-student-passion",
+    name: "Student Meets Passion",
+    description: "Finding a passion, losing it to burnout/competition, and rebuilding.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "inciting_incident", label: "The Inciting Incident", targetRangePercentage: [10, 15] },
+      { promptId: "special_world", label: "The Unfamiliar World", targetRangePercentage: [15, 20] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [20, 25] },
+      { promptId: "the_catalyst", label: "The Internal Catalyst", targetRangePercentage: [10, 15] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [15, 20] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  },
+  {
+    id: "hj-cinderella",
+    name: "Cinderella (The False Peak)",
+    description: "An initial unearned rise, a devastating fall to rock bottom, and a final earned rise.",
+    compatibleTrackId: "heros_journey",
+    layout: [
+      { promptId: "ordinary_world", label: "The Ordinary World", targetRangePercentage: [5, 10] },
+      { promptId: "special_world", label: "The Unfamiliar World", targetRangePercentage: [15, 20] },
+      { promptId: "the_ordeal", label: "The Ordeal", targetRangePercentage: [20, 25] },
+      { promptId: "the_catalyst", label: "The Internal Catalyst", targetRangePercentage: [10, 15] },
+      { promptId: "winning_action", label: "The Winning Action", targetRangePercentage: [15, 20] },
+      { promptId: "essential_belief", label: "The Essential Belief", targetRangePercentage: [10, 15] }
+    ]
+  }
+];
 
 export const HEROS_JOURNEY_PROMPTS: PromptField[] = [
   // Phase 1: The Heart
-  {
-    id: 'story_selection',
-    label: '1. Working Title or Tagline',
-    description: 'Give your story a quick, memorable title or a short tagline just to remind yourself what you\'re writing about.',
-    placeholder: 'e.g., The "Camp Counselor" Story, or "The three-day syntax error panic"...',
-    tip: 'Avoid trying to write everything yet. Focus on a single slice of time where something interesting happened.',
-    examples: [
-      { title: 'The Camp Counselor Story', text: 'The Science Director resigned mid-summer, and the camp director put me in charge of twenty highly distracted ten-year-olds in the Science Shed.' },
-      { title: 'The Burnt Cake Story', text: 'Ruining a five-layered custom birthday cake an hour before the party guests arrived and holding nothing but a smoky kitchen towel.' }
-    ]
+  { 
+    id: 'story_selection', 
+    label: 'Working Title', 
+    subtitle: 'What is your story about?', 
+    description: 'Give your story a quick, memorable title or a short tagline just to remind yourself what you\'re writing about.', 
+    placeholder: 'e.g., The "Camp Counselor" Story, or "The three-day syntax error panic"...', 
+    tip: 'Avoid trying to write everything yet. Focus on a single slice of time where something interesting happened.', 
+    tools: ['excavator']
   },
-  {
-    id: 'transformation_formula',
-    label: '2. How did you change?',
-    description: 'Fill in the core equation of your growth: "I used to be [blank], but after [this story], I became [blank]."',
-    placeholder: 'I used to be a shy perfectionist who feared making mistakes before my peers, but after taking over the camp program unexpectedly, I became an engaged, resilient leader who embraces organic chaos in order to foster genuine discovery.',
-    tip: 'Focus on transformations of character, self-identity, or mindset rather than external awards.',
-    pitfallWarning: 'Avoid the "Kuzco trap" (going from selfish to marginally less selfish) or claiming you went from a cheater to an honest person.',
-    examples: [
-      { title: 'Camp Counselor Formula', text: 'I used to be a silent micro-manager of lists and supplies who dreaded public uncertainty, but after teaching density under a blazing sun, I became a dynamic leader who values messy, active curiosity over textbook lectures.' }
-    ]
+  { 
+    id: 'transformation_formula', 
+    label: 'Your Transformation', 
+    subtitle: 'How did you change?', 
+    description: 'Fill in the core equation of your growth: "I used to be [blank], but after [this story], I became [blank]."', 
+    placeholder: 'I used to be a shy perfectionist... I became an engaged, resilient leader...', 
+    tip: 'Focus on transformations of character, self-identity, or mindset rather than external awards.', 
+    pitfallWarning: 'Avoid the "Kuzco trap" (going from selfish to marginally less selfish).'
   },
-  {
-    id: 'essential_belief',
-    label: '3. What is the Elixir? (Your Essential Belief)',
-    description: 'The Elixir is the deeper lesson, mindset, or new worldview that you now carry with you.\nNot sure yet? Ask yourself: What do mentors or friends say is unique about how you approach life? Is there a story about how you developed it? How are you different than you were a few years ago?',
-    placeholder: 'e.g. "Messy discovery is stickier than a tidy lecture," or "Patience is like an isometric wall-sit; it requires quiet, immense effort."...',
-    tip: 'This is the guiding philosophy of your essay. It represents the inner values that dictate your choices.',
-    suggestedWeight: 0.10,
-    examples: [
-      { title: 'Pedagogical Shift', text: 'Messy, organic discovery sticks to the mind much longer than a polished, passive lecture.' }
-    ]
+  { 
+    id: 'essential_belief', 
+    label: 'The Elixir (Your Perspective)', // Updated as discussed previously
+    subtitle: 'What is your essential belief?', 
+    description: 'The Elixir is the deeper lesson, mindset, or new worldview that you now carry with you.', 
+    placeholder: 'e.g. "Messy discovery is stickier than a tidy lecture..."', 
+    tip: 'This is the guiding philosophy of your essay. It represents the inner values that dictate your choices.'
   },
-  {
-    id: 'magic_elixir',
-    label: '4. Applying the Elixir (Optional)',
-    description: 'How do you or will you apply this earned wisdom to benefit your classmates, family, community, or the world?',
-    placeholder: 'e.g., "I bring this experimental, Saturday-engineering mindset to your materials research labs, eager to treat failures as data points rather than stop signs."',
-    tip: 'Connect your internal change to your actions at college. Do not just say "I want to major in Biology." Frame it as an active promise of character.',
-    tools: ['montage'],
-    examples: [
-      { title: 'Classroom Integration', text: 'I bring this experimental, Saturday-engineering mindset to your materials research labs, eager to treat failures as data points rather than stop signs.' }
-    ]
+  { 
+    id: 'magic_elixir', 
+    label: 'Applying the Elixir', 
+    subtitle: 'How will you apply this wisdom?', 
+    description: 'How do you or will you apply this earned wisdom to benefit your classmates, family, community, or the world?', 
+    placeholder: 'e.g., "I bring this experimental, Saturday-engineering mindset to your materials research labs..."', 
+    tip: 'Connect your internal change to your actions at college. Frame it as an active promise of character.', 
+    tools: ['montage'] 
   },
+
   // Phase 2: The Setup
-  {
-    id: 'ordinary_world',
-    label: '5. The Ordinary World',
-    description: 'Describe where you started (your safe, familiar comfort zone, routine, or mindset).',
+  { 
+    id: 'ordinary_world', 
+    label: 'The Ordinary World', 
+    subtitle: 'What was your life like before?', 
+    description: 'Describe where you started (your safe, familiar comfort zone, routine, or mindset).', 
     placeholder: 'e.g. Quiet supply room with structured list inventories...',
-    tip: 'Define the "before" state so the reader can measure your psychological transformation.',
-    suggestedWeight: 0.05,
-    tools: ['montage'],
-    examples: [
-      { title: 'The Comfort Zone', text: 'My quiet bedroom, writing lines of code where errors can be frictionlessly deleted in private.' }
-    ]
+    tip: 'Define the "before" state so the reader can measure your psychological transformation.', 
+    tools: ['montage'] 
   },
-  {
-    id: 'unfamiliar_world',
-    label: '6. The Unfamiliar World',
-    description: 'Describe the chaotic, unpredictable, or challenging new world you were forced to navigate.',
-    placeholder: 'e.g. The muddy shore of Lake George with twenty screaming kids...',
-    tip: 'Show the visual and environmental contrast to emphasize the psychological distance you had to cross.',
-    suggestedWeight: 0.05,
-    tools: ['montage'],
-    examples: [
-      { title: 'The Shock of the New', text: 'Standing on a stage with a flickering projector, explaining debugging to fifty impatient local business owners.' }
-    ]
+  { 
+    id: 'special_world', // Fixed ID to match guides
+    label: 'The Unfamiliar World', 
+    subtitle: 'What was the chaotic new world like?', 
+    description: 'Describe the chaotic, unpredictable, or challenging new world you were forced to navigate.', 
+    placeholder: 'e.g. The muddy shore of Lake George with twenty screaming kids...', 
+    tip: 'Show the visual and environmental contrast to emphasize the psychological distance you had to cross.', 
+    tools: ['montage'] 
   },
-  {
-    id: 'inciting_incident',
-    label: '7. What was the Inciting Incident?',
-    description: 'What broke your status quo and called you out of your comfort zone?',
-    placeholder: 'e.g., The head developer contracted flu, leaving the codebase in my hands; or my sister volunteered me to speak...',
-    tip: 'In literature, this is Katniss volunteering or Hagrid breaking the door down. In an essay, it is the unexpected change that forces a choice.',
-    suggestedWeight: 0.05,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'The Spark', text: 'The Science Instructor packed their bags overnight. The director handed me a key ring and said, "You teach science at 9:00 AM."' }
-    ]
+  { 
+    id: 'inciting_incident', 
+    label: 'The Catalyst / Incident', 
+    subtitle: 'What was the Inciting Incident?', 
+    description: 'What broke your status quo and called you out of your comfort zone?', 
+    placeholder: 'e.g., The head developer contracted flu, leaving the codebase in my hands...', 
+    tip: 'In an essay, it is the unexpected change that forces a choice.', 
+    tools: ['bullet_time'] // Fixed typo from 'bullet_time'
   },
-  {
-    id: 'hesitation_doubt',
-    label: '8. How did you hesitate or doubt yourself?',
-    description: 'Explain your internal hesitation. Why did you want to cling to your Ordinary World? Vulnerability makes you highly relatable.',
-    placeholder: 'e.g. I felt like an imposter. I secretly hoped they would cancel the class so I could go back to sorting folders...',
-    tip: 'Action stars who go into battles without fear are boring. Admissions readers love hearing about your genuine doubts.',
-    suggestedWeight: 0.05,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'The Imposter Fear', text: 'I stared at the "Science Leader" lanyard. I was convinced someone would tap me on the shoulder, expose me as a fraud who barely survived high school chemistry, and send me back.' }
-    ]
+  { 
+    id: 'hesitation_doubt', 
+    label: 'The Hesitation', 
+    subtitle: 'How did you hesitate or doubt yourself?', 
+    description: 'Explain your internal hesitation. Why did you want to cling to your Ordinary World?', 
+    placeholder: 'e.g. I felt like an imposter. I secretly hoped they would cancel the class...', 
+    tip: 'Action stars who go into battles without fear are boring. Admissions readers love hearing about your genuine doubts.', 
+    tools: ['bullet_time'] // Fixed typo
   },
-  {
-    id: 'crossing_threshold',
-    label: '9. The Commitment',
-    description: 'Describe the precise moment you made the commitment. You stepped through the door, with no turning back.',
-    placeholder: 'e.g. I unlocked the Science Shed, turned on the hum of the fluorescent bulb, and signed my name on the board.',
-    tip: 'This is the active crossing point. Make it physical!',
-    suggestedWeight: 0.05,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'Crossing the Threshold', text: 'I walked down the pine path, pushed open the squeaking wooden door of the Science Shed, and set up twenty plastic cups. I wrote "LET’S BREAK THINGS" across the slate chalkboard.' }
-    ]
+  { 
+    id: 'crossing_threshold', 
+    label: 'The Commitment', 
+    subtitle: 'When did you cross the threshold?', 
+    description: 'Describe the precise moment you made the commitment. You stepped through the door, with no turning back.', 
+    placeholder: 'e.g. I unlocked the Science Shed, turned on the hum of the fluorescent bulb, and signed my name on the board.', 
+    tip: 'This is the active crossing point. Make it physical!', 
+    tools: ['bullet_time'] // Fixed typo
   },
+
   // Phase 3: The Climax
-  {
-    id: 'stakes_risk',
-    label: '10. What was at risk?',
-    description: 'What quiet, internal, or emotional stakes were on the line? Avoid life-or-death drama.',
-    placeholder: 'e.g. My credibility as an organizer, my ego as an all-powerful leader, my friendship, or my own confidence...',
-    tip: 'Pixar Rule: We admire a character more for trying than for succeeding. Keep risks completely grounded.',
-    pitfallWarning: 'Do NOT claim a mundane event was a "life-or-death" tragedy.',
-    suggestedWeight: 0.05,
-    examples: [
-      { title: 'Risking Ego / The Icon', text: 'If I admitted I didn’t know the answer to the student\'s physics question, I risked shattering my fragile image as the flawless, all-wise tutoring coordinator.' }
-    ]
+  { 
+    id: 'stakes_risk', 
+    label: 'The Stakes', 
+    subtitle: 'What was at risk?', 
+    description: 'What quiet, internal, or emotional stakes were on the line? Avoid life-or-death drama.', 
+    placeholder: 'e.g. My credibility as an organizer, my ego as an all-powerful leader...', 
+    tip: 'Pixar Rule: We admire a character more for trying than for succeeding. Keep risks completely grounded.'
   },
-  {
-    id: 'the_ordeal_flat',
-    label: '11. The Key Complication',
-    description: 'Describe the pivot or unexpected complication of your story—the moment where things got particularly difficult or confusing. Keep it honest and scaled down.',
-    placeholder: 'e.g. Mid-lesson, everything descended into chaos. The chemical experiment bubbled over the tabletop, and the campers began throwing things while the supervisor watched from the doorway.',
-    tip: 'Do NOT inflate this into a life-or-death battlefield! Grounded honesty is far more compelling.',
-    suggestedWeight: 0.15,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'The Teaching Disaster', text: 'Twenty campers were yelling, index cards were littering the wet deck, and my theoretical lecture on buoyancy had entirely crumbled. I was standing there mute, holding a soggy box of baking soda.' }
-    ]
+  { 
+    id: 'the_ordeal', // Fixed ID to match guides
+    label: 'The Ordeal', 
+    subtitle: 'What was the key complication?', 
+    description: 'Describe the pivot or unexpected complication of your story—the moment where things got particularly difficult or confusing.', 
+    placeholder: 'e.g. Mid-lesson, everything descended into chaos. The chemical experiment bubbled over...', 
+    tip: 'Do NOT inflate this into a life-or-death battlefield! Grounded honesty is far more compelling.', 
+    tools: ['bullet_time'] // Fixed typo
   },
-  {
-    id: 'the_catalyst',
-    label: '12. The Catalyst',
-    description: 'What internal realization, memory, piece of advice, or core value did you suddenly grasp when you were stuck? This is your catalytic "magic talisman"—the mental tool that gave you the clarity to act.',
-    placeholder: 'e.g. I remembered my dad\'s Saturday challenges. I realized I didn\'t need to be professional; I just needed to look at it as a game...',
-    tip: 'Ensure this is an internal shift. If your mother, a teacher, or a random stroke of luck swoops in to solve the problem for you, it drains your narrative tension. The Catalyst is an idea you choose to embrace.',
-    suggestedWeight: 0.05,
-    examples: [
-      { title: 'Recalling Father\'s Wisdom', text: 'I remembered Saturday mornings in the garage. Dad never lectured me on physics; he just gave me cardboard and tape. I realized I needed to stop lecturing and start building.' }
-    ]
+  { 
+    id: 'the_catalyst', 
+    label: 'The Internal Catalyst', 
+    subtitle: 'What realization helped you break through?', 
+    description: 'What internal realization, memory, piece of advice, or core value did you suddenly grasp when you were stuck?', 
+    placeholder: 'e.g. I remembered my dad\'s Saturday challenges. I realized I didn\'t need to be professional...', 
+    tip: 'Ensure this is an internal shift. The Catalyst is an idea you choose to embrace.'
   },
-  {
-    id: 'winning_action',
-    label: '13. The Winning Action',
-    description: 'Describe the specific, agency-driven choice you made to overcome the complication. What did you actually do, physically or verbally, to solve the problem?',
-    placeholder: 'e.g. I threw the lesson plan into the recycling bin and asked who wanted to launch water-bottle rockets.',
-    tip: 'Use active verbs. Show us the messy work of fixing the issue rather than skipping straight to the victory.',
-    suggestedWeight: 0.10,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'Active Intervention', text: 'I threw the wet lectures into the bin, grabbed a knife, cut a watermelon in half, and shouted, \'We are going to see what floats!\'' }
-    ]
+  { 
+    id: 'winning_action', 
+    label: 'The Winning Action', 
+    subtitle: 'What specific action did you take to solve the problem?', 
+    description: 'Describe the specific, agency-driven choice you made to overcome the complication.', 
+    placeholder: 'e.g. I threw the lesson plan into the recycling bin and asked who wanted to launch water-bottle rockets.', 
+    tip: 'Use active verbs. Show us the messy work of fixing the issue rather than skipping straight to the victory.', 
+    tools: ['bullet_time'] // Fixed typo
   },
-  {
-    id: 'the_payoff',
-    label: '14. The Payoff',
-    description: 'What was the immediate, short-term result of your action?',
-    placeholder: 'e.g. The campers stopped yelling, sat in a circle in the mud, and successfully guessed the density of five different fruits.',
-    tip: 'Keep this brief. The scoreboard victory or the repaired object is just the bridge to your real transformation (The Elixir).',
-    suggestedWeight: 0.05,
-    examples: [
-      { title: 'Immediate Result', text: 'The campers stopped yelling, sat in a circle in the mud, and successfully guessed the density of five different fruits.' }
-    ]
+  { 
+    id: 'the_payoff', // Removed '14.'
+    label: 'The Payoff', 
+    subtitle: 'What was the immediate result?', // Added missing subtitle
+    description: 'What was the immediate, short-term result of your action?', 
+    placeholder: 'e.g. The campers stopped yelling, sat in a circle in the mud, and successfully guessed the density of five different fruits.', 
+    tip: 'Keep this brief. The scoreboard victory is just the bridge to your real transformation.'
   }
 ];
 
 export const DIFFERENT_BUT_TRUTHFUL_PROMPTS: PromptField[] = [
   {
     id: 'authenticity_declaration',
-    label: '1. The Silent Admission',
+    label: 'The Silent Admission',
+    subtitle: 'What is your quiet trait?',
     description: 'Break down the polished, flawless applicant facade. Introduce yourself with an honest, striking moment of absolute vulnerability—focusing on a quiet, underrepresented trait.',
-    placeholder: 'e.g., "I am not the roaring captain of the debate team. When the zoom lights focus on me, my voice initially slips into a quiet octave. I am the logistical architect behind the team transcripts..."',
+    placeholder: 'e.g., "I am not the roaring captain of the debate team..."',
     tip: 'Start with a humble, distinctive admission that breaks free from typical bragging and displays comfortable self-acceptance.',
-    pitfallWarning: 'Never use fake self-criticism like "My only flaw is caring too much".',
-    suggestedWeight: 0.15,
-    tools: ['montage'],
-    examples: [
-      { title: 'The Logistician', text: 'My name is not on the front of any school awards... Instead, my high school career was written in the margins: sorting supply folders, building the structural spreadsheets that held active student initiatives together, and listening to the chaos from the shadows.' }
-    ]
+    tools: ['montage', 'excavator']
   },
   {
     id: 'dt_tipping_point',
-    label: '2. The Tipping Point',
+    label: 'The Tipping Point',
+    subtitle: 'Where was this trait tested?',
     description: 'Pinpoint a specific scene where this under-the-radar trait was tested by friction or reality. Note: A quiet, unexpected complication is far more honest than a melodramatic life-or-death crisis.',
-    placeholder: 'e.g., "During the annual food drive, the primary logistics software crashed. I stood surrounded by 400 unsorted boxes. My silent nature meant I hesitated to shout for order. I had to learn to command attention silently..."',
+    placeholder: 'e.g., "During the annual food drive, the primary logistics software crashed..."',
     tip: 'Set the physical scene.',
-    suggestedWeight: 0.20,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'The Tipping Point', text: 'During the school clothing drive, the tracking server crashed, leaving us with three hundred garbage bags of unsorted donor garments piled high in the library hallway...' }
-    ]
+    tools: ['bullet_time']
   },
   {
     id: 'real_stories_triumph',
-    label: '3. The Unseen Labor',
+    label: 'The Unseen Labor',
+    subtitle: 'How did you handle the friction?',
     description: 'Detail the precise, messy, hands-on steps you took to handle this friction. Avoid grand savior speeches; show us the work.',
-    placeholder: 'e.g., "I realized leadership did not require a megaphone. I sat down on the floor and began grouping the boxes by zip codes..."',
+    placeholder: 'e.g., "I realized leadership did not require a megaphone..."',
     tip: 'Focus heavily on verbs.',
-    suggestedWeight: 0.20,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'The Watermelon Incident / Quiet Action', text: 'I threw the rigid lecture script into the bin. I grabbed a dry marker, wrote "DENSITY" in big letters across the side of a large green watermelon, and marched everyone down to the lake shore with a simple question: Will it float?' }
-    ]
+    tools: ['bullet_time']
   },
   {
     id: 'reflection_lessons',
-    label: '4. The Messy Spectrum Reflection',
+    label: 'The Messy Spectrum Reflection',
+    subtitle: 'How did this redefine your contribution?',
     description: 'Analyze how this event redefined your sense of contribution. Why does modern human growth happen on a continuous, messy spectrum of effort rather than clean storybook beats?',
-    placeholder: 'e.g., "Watching that watermelon bob on the lake as twenty kids screamed in wonder taught me that leadership does not belong to the loudest voice in the room..."',
-    pitfallWarning: 'Watch out for over-fitting your growth.',
-    suggestedWeight: 0.20,
-    tools: ['montage'],
-    examples: [
-      { title: 'Redefining Leadership', text: 'Watching that watermelon bob on the lake as twenty kids screamed in wonder taught me that leadership does not belong to the loudest voice in the room. It belongs to the person who can curate an arena of shared curiosity.' }
-    ]
+    placeholder: 'e.g., "Watching that watermelon bob on the lake as twenty kids screamed in wonder taught me..."',
+    tools: ['montage']
   },
   {
     id: 'authenticity_promise',
-    label: '5. The Quiet Integration',
+    label: 'The Quiet Integration',
+    subtitle: 'How will you apply this on campus?',
     description: 'Connect your humble, tested trait directly to how you will support or enrich your future college campus, academic lab, or dorm circle.',
-    placeholder: 'e.g., "I promise to bring this quiet, detail-focused engineering philosophy to your robotic labs. I am the collaborator who keeps the lab quiet but highly operational..."',
+    placeholder: 'e.g., "I promise to bring this quiet, detail-focused engineering philosophy..."',
     tip: 'Frame this as a modest promise. Avoid sounding like a savior.',
-    suggestedWeight: 0.25,
-    tools: ['montage'],
-    examples: [
-      { title: 'The Promise to College', text: 'I bring this Saturday garage spirit to your undergraduate research programs. I am not the student who will lecture my peers; I am the collaborator who will help assemble the experimental rigs...' }
-    ]
+    tools: ['montage']
   }
 ];
 
 export const INTELLECTUAL_JOURNEY_PROMPTS: PromptField[] = [
   {
     id: 'ij_obsession',
-    label: '1. The Intellectual Spark',
+    label: 'The Intellectual Spark',
+    subtitle: 'What puzzle keeps you up at night?',
     description: 'What specific puzzle, idea, paradox, historical question, or scientific loop keeps you up at night? Do not write a generic summary of "loving biology"—show us the specific "itchy" question or contradiction you had to explore.',
-    placeholder: 'e.g. Why do some systems thrive on entropy? Trying to reconcile dual-aspect monism, or becoming preoccupied by the environmental history of natural preserves...',
+    placeholder: 'e.g. Why do some systems thrive on entropy? Trying to reconcile dual-aspect monism...',
     tip: 'Focus on the organic curiosity. Let us hear your human voice.',
-    suggestedWeight: 0.20,
-    tools: ['montage'],
-    examples: [
-      { title: 'The Entropy Obsession', text: 'I became obsessed with the concept of thermal decay in closed systems. Thermodynamics said that disorder always wins, yet biological life does nothing but assemble itself into meticulous, hyper-organized shapes.' }
-    ]
+    tools: ['montage', 'excavator']
   },
   {
     id: 'ij_dissonance',
-    label: '2. Complicating the Theory',
+    label: 'Complicating the Theory',
+    subtitle: 'What disrupted your initial view?',
     description: 'As you pursued this obsession, what unexpected counter-evidence, philosophical tension, or societal paradox emerged that disrupted your initial simplistic view?',
-    placeholder: 'e.g. The data completely contradicted my assumption. I read a critique that jarred my entire perspective on physical systems...',
+    placeholder: 'e.g. The data completely contradicted my assumption...',
     tip: 'Intellectual maturity is shown when you accept that your favorite theories are messy or incomplete.',
-    suggestedWeight: 0.20,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'Entropy and Social Systems', text: 'I tried to map thermodynamic entropy onto high school volunteer associations, assuming chaotic groups would collapse. Instead, I discovered that rigid micro-management drove students away...' }
-    ]
+    tools: ['bullet_time']
   },
   {
     id: 'ij_pivot',
-    label: '3. The Synthesizing Pivot',
+    label: 'The Synthesizing Pivot',
+    subtitle: 'How did you reconcile the tension?',
     description: 'How did you reconcile this tension? Describe your logical thought process or analysis. What new mental model did you construct?',
-    placeholder: 'e.g. I reconciled these opposing forces by synthesizing structural linguistics with sociology... I realized order and chaos are not enemies, but...',
+    placeholder: 'e.g. I reconciled these opposing forces by synthesizing structural linguistics with sociology...',
     tip: 'Show us the step-by-step gears of your mind solving the complication. Avoid cinematic cliches like "suddenly I had a eureka moment!"',
-    suggestedWeight: 0.25,
-    tools: ['bullet_time'],
-    examples: [
-      { title: 'Controlled Disequilibrium', text: 'I formulated a system model I call "Controlled Disequilibrium." I stopped trying to eliminate the chaos in our debate archives; instead, I created a wiki where anyone could drop disorganized scraps...' }
-    ]
+    tools: ['bullet_time']
   },
   {
     id: 'ij_paradigm',
-    label: '4. The Intellectual Paradigm Shift',
+    label: 'The Intellectual Paradigm Shift',
+    subtitle: 'What deeper truth do you now believe?',
     description: 'What deeper truth do you now believe about how knowledge is formed, or how human beings interact with complex ideas?',
-    placeholder: 'e.g. Nuance is not hesitation; it is observation. Intellectual progress is not about finding clean answers, but about having the stomach to...',
+    placeholder: 'e.g. Nuance is not hesitation; it is observation. Intellectual progress is not about finding clean answers...',
     tip: 'Formulate a genuine philosophical position. Avoid high-sounding academic fluff.',
-    suggestedWeight: 0.15,
-    tools: ['montage'],
-    examples: [
-      { title: 'The Strength of Ambiguity', text: 'True intellectual courage lies not in finding an unshakeable thesis, but in welcoming the complication that threatens to dismantle it. Nuance is not hesitation; it is observation.' }
-    ]
+    tools: ['montage']
   },
   {
     id: 'ij_promise',
-    label: '5. The Laboratory Promise',
+    label: 'The Laboratory Promise',
+    subtitle: 'How will you apply this mode of enquiry?',
     description: 'How will you apply this specific mode of enquiry and love of analytical complexity on our campus, in seminars, or in collaborative research labs?',
-    placeholder: 'e.g. I bring this appetite for paradox to your critical theory seminars. I am the student who will question our consensus...',
+    placeholder: 'e.g. I bring this appetite for paradox to your critical theory seminars...',
     tip: 'Speak directly about academic dynamics. Frame your brain as a collaborative asset.',
-    suggestedWeight: 0.20,
-    tools: ['montage'],
-    examples: [
-      { title: 'The CS Lab', text: 'I bring this experimental, chaos-embracing outlook to your systems engineering labs. I am excited to join projects where the compilers are breaking and the manuals are outdated...' }
-    ]
+    tools: ['montage']
   }
 ];
 
@@ -456,5 +528,127 @@ Here are a few ways to effectively bend the rules without breaking your story:
 * **The Commitment was the Ordeal:** Sometimes the hardest part of the journey isn't the final test, but simply taking the first step. You might find that crossing the threshold (e.g., finally standing up to speak, submitting the flawed design, or admitting you need help) was the true climax of your story, and everything that followed was just the falling action.
 
 **The Golden Rule of Breaking Rules:** You can bend the plot, but you cannot bypass the transformation. You can fail the test, use the wrong tool, or fight the wrong battle, but you must still return with the Elixir. The internal growth is non-negotiable.`
+  }
+];
+
+export const EXCAVATOR_PROMPTS = [
+  // --- THE ONRAMP (Low stakes, tangible, gets them typing) ---
+  {
+    id: "excavator_1",
+    question: "What is an obscure topic or 'useless' skill you could confidently teach a 10-minute masterclass on with zero preparation?"
+  },
+  {
+    id: "excavator_2",
+    question: "If you had to put one ordinary, physical object in a museum to represent your high school years, what would it be? Why is it scratched, dented, or worn out?"
+  },
+  {
+    id: "excavator_3",
+    question: "What is the hardest you've ever worked on something that wasn't for a grade, a trophy, or a resume?"
+  },
+  
+  // --- THE SPIRAL (Interleaved contexts: Social, Quirky, Deep, Action) ---
+  {
+    id: "excavator_4",
+    question: "What is a role you play in your family or friend group that has no official title, but everything falls apart if you stop doing it?"
+  },
+  {
+    id: "excavator_5",
+    question: "Describe a mundane, everyday inconvenience that you’ve engineered a ridiculously complex solution for."
+  },
+  {
+    id: "excavator_6",
+    question: "Describe a time you totally changed your mind about something you had been absolutely certain of."
+  },
+  {
+    id: "excavator_7",
+    question: "What was a disaster that happened during a live event, game, or performance. How did you adapt in the moment without the crowd noticing?"
+  },
+  {
+    id: "excavator_8",
+    question: "What was a system, rule, or piece of technology you encountered that was so inefficient it drove you crazy? How did you try to hack it, fix it, or work around it?"
+  },
+  {
+    id: "excavator_9",
+    question: "What is the most chaotic, overwhelming environment you’ve ever had to focus in?"
+  },
+  {
+    id: "excavator_10",
+    question: "What's a hard or scary choice you had to make where there was no obvious 'right' answer?"
+  },
+  {
+    id: "excavator_11",
+    question: "When were you the 'translator' between two people who were speaking the exact same language but completely misunderstanding each other?"
+  },
+  {
+    id: "excavator_12",
+    question: "When did you try to fix something and actually made it completely worse?"
+  },
+  {
+    id: "excavator_13",
+    question: "What is a personality trait you spent years trying to hide or fix, only to realize it's actually your secret weapon?"
+  },
+  {
+    id: "excavator_14",
+    question: "Describe a space—a garage, a stage wing, a kitchen, a specific desk—where you feel most like yourself. What specific ingredients of that room make you feel safe or powerful?"
+  },
+  {
+    id: "excavator_15",
+    question: "When was a group, team, or club you were in completely paralyzed? How did you break the gridlock and get people moving?"
+  },
+  {
+    id: "excavator_16",
+    question: "Think about a project, a piece of code, or a physical mechanism you were obsessively trying to fix. What, exactly, was the missing puzzle piece that finally made it work?"
+  },
+  {
+    id: "excavator_17",
+    question: "When did you realize an adult or authority figure was completely wrong? What did you do about it?"
+  },
+  {
+    id: "excavator_18",
+    question: "When did you have to passionately defend an idea, or research a position, that you personally disagreed with? Did it change how you see the other side?"
+  },
+  {
+    id: "excavator_19",
+    question: "What is a 'rule' you intentionally broke because you realized the rule itself didn't make any sense?"
+  },
+  {
+    id: "excavator_20",
+    question: "When did you work incredibly hard, do everything exactly right, and still lose or fail? What did you do the next morning?"
+  },
+  {
+    id: "excavator_21",
+    question: "What is one specific piece of advice you would give your new high school freshman self? What specific story does that advice come from?"
+  },
+  {
+    id: "excavator_22",
+    question: "When did you do the 'unglamorous' work in the background to ensure someone else could shine? Why did you do it, and what did you learn in the shadows?"
+  },
+  {
+    id: "excavator_23",
+    question: "Describe a moment when you realized the 'perfect plan' you spent weeks making was going to be completely useless in the real world."
+  },
+  {
+    id: "excavator_24",
+    question: "What is the most awkward, uncomfortable conversation you intentionally initiated? Why did you force yourself to have it?"
+  },
+  {
+    id: "excavator_25",
+    question: "Think about a physical motion or drill you've repeated thousands of times (a free throw, a dance step, a brushstroke). What exactly goes through your head in that split second?"
+  },
+  {
+    id: "excavator_26",
+    question: "What are two things you deeply care about that seem to completely contradict each other? How do you reconcile them in your own mind?"
+  },
+  {
+    id: "excavator_27",
+    question: "Describe a time you showed up to 'help' someone or fix a community problem, but quickly realized they didn't want or need your help at all. What did you change?"
+  },
+  {
+    id: "excavator_28",
+    question: "When was the last time a book, article, or documentary made you stare at the wall because it completely broke your mental model of the world?"
+  },
+  {
+    id: "excavator_29",
+    question: "When did you have to swallow your pride and publicly admit to a group that you were completely in over your head?"
   }
 ];

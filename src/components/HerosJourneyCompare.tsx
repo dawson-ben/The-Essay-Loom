@@ -120,7 +120,7 @@ export const FAMILIAR_STORIES: Story[] = [
   {
     id: 'student_essay',
     title: 'Camp Counselor Essay',
-    creator: 'Sample Personal Statement',
+    creator: 'Example',
     type: 'academic',
     summary: 'A camp counselor unexpectedly takes over the science program, shifting from rigid planning to fostering organic, hands-on discovery.',
     beats: {
@@ -153,7 +153,7 @@ export const FAMILIAR_STORIES: Story[] = [
   {
     id: 'student_pole_vault',
     title: 'Backyard Vaulting Setup',
-    creator: 'Student Athlete Essay',
+    creator: 'Example',
     type: 'academic',
     summary: 'A track athlete overcomes severe performance anxiety and injury setbacks by building a training setup in the dark backyard with I-beams.',
     beats: {
@@ -186,7 +186,7 @@ export const FAMILIAR_STORIES: Story[] = [
   {
     id: 'student_tire_mechanic',
     title: 'The Torque Wrench Key',
-    creator: 'Student Service Essay',
+    creator: 'Example',
     type: 'academic',
     summary: 'A student transitions from an administrative observer to active hands-on volunteer, preparing a van for a struggling family of eight.',
     beats: {
@@ -218,7 +218,7 @@ export const FAMILIAR_STORIES: Story[] = [
   },
   {
     id: 'harry_potter',
-    title: 'Harry Potter (Sorcerer’s Stone)',
+    title: 'Harry Potter and the Sorcerer’s Stone)',
     creator: 'J.K. Rowling',
     type: 'literature',
     summary: 'An orphan boy discovers he\'s a wizard, enters Hogwarts, and faces dangerous trials to protect his new-found home.',
@@ -765,22 +765,8 @@ export default function HerosJourneyCompare() {
   };
 
   return (
-    <div id="heros_comparison_matrix" className="bg-slate-950 border border-slate-850 rounded-2xl p-6 md:p-8 space-y-8 shadow-lg shadow-slate-950/20">
-      {/* Intro Header */}
-      <div className="border-b border-slate-800 pb-5">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-teal-400" />
-          <span className="text-xs uppercase font-sans tracking-wider text-teal-400 font-bold">
-            Pedagogical Breakdown
-          </span>
-        </div>
-        <h2 className="text-2xl font-serif font-medium text-white mt-1.5">
-          The Comparative Narrative Map
-        </h2>
-        <p className="text-xs text-slate-400 font-sans mt-2 leading-relaxed max-w-4xl">
-          Admissions essays don't have to follow a rigid fantasy template to be powerful. Use this interactive matrix to discover how master storytellers across film, literature, and academia adapt the same underlying structural beats—and where they subvert them, skip stages, or ground them in everyday reality.
-        </p>
-      </div>
+    <div id="heros_comparison_matrix" className="space-y-8">
+
 
       {/* Controller Area */}
       <div className="space-y-4" id="matrix_controls">

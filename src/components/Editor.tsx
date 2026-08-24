@@ -2,14 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EssayDraft, TrackType } from '../types';
 import Workbook from './Workbook';
-import StoryPreview from './StoryPreview';
+import AssemblyBoard from './AssemblyBoard';
 import Handbook from './Handbook';
-import ZoomLensTool from './ZoomLensTool';
-import MontageTool from './MontageTool';
 import Scratchpad from './Scratchpad';
-import StoryArcVisualizer from './StoryArcVisualizer';
 import InteractiveGuidebook from './InteractiveGuidebook';
-import { BookOpen, FileEdit, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp } from 'lucide-react';
+import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { fetchEssays, createEssay, updateEssay, deleteEssay } from '../db';
 
@@ -20,7 +17,7 @@ export default function Editor() {
 
   const [drafts, setDrafts] = useState<EssayDraft[]>([]);
   const [activeDraftId, setActiveDraftId] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'worksheet' | 'visualizer' | 'clinics' | 'preview' | 'guidebook'>('worksheet');
+  const [activeTab, setActiveTab] = useState<'worksheet' | 'clinics' | 'preview' | 'guidebook'>('worksheet');
   const [showOnboarding, setShowOnboarding] = useState<boolean>(false);
   const [isScratchpadOpen, setIsScratchpadOpen] = useState(false);
   const [isGuidebookOpen, setIsGuidebookOpen] = useState(false);
@@ -123,7 +120,7 @@ export default function Editor() {
   }, [user]);
 
   useEffect(() => {
-    if (tab && ['worksheet', 'visualizer', 'clinics', 'preview', 'guidebook'].includes(tab)) {
+    if (tab && ['worksheet', 'clinics', 'preview', 'guidebook'].includes(tab)) {
       setActiveTab(tab as any);
     }
   }, [tab]);
@@ -301,7 +298,7 @@ export default function Editor() {
     }
     return (
       <div className="min-h-screen bg-[#070a13] flex items-center justify-center font-sans">
-        <div className="text-teal-400 animate-pulse font-mono tracking-wider text-sm">LOADING WORKSPACE...</div>
+        <div className="text-teal-400 animate-pulse font-sans tracking-wider text-sm">LOADING WORKSPACE...</div>
       </div>
     );
   }
@@ -339,7 +336,7 @@ export default function Editor() {
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end shrink-0">
-          <div className="flex items-center gap-2 text-sm font-mono text-slate-400 mr-2">
+          <div className="flex items-center gap-2 text-sm font-sans text-slate-400 mr-2">
             {saving ? <Cloud className="w-4 h-4 text-teal-400 animate-pulse" /> : <Cloud className="w-4 h-4 text-slate-500" />}
             <span className="hidden lg:inline">{saving ? 'Syncing...' : 'Saved'}</span>
           </div>
@@ -459,27 +456,15 @@ export default function Editor() {
           </button>
 
           <button
-            onClick={() => switchTab('visualizer')}
-            className={`flex-1 flex gap-2 items-center justify-center py-2.5 text-sm font-sans font-bold rounded-lg transition-all cursor-pointer ${
-              activeTab === 'visualizer'
-                ? 'bg-slate-800 text-white shadow-md border border-slate-700/60 bg-gradient-to-r from-slate-800 to-slate-850'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <TrendingUp className="w-4 h-4 text-cyan-400" />
-            Story Arc Visualizer
-          </button>
-
-          <button
             onClick={() => switchTab('preview')}
-            className={`hidden lg:flex flex-1 gap-2 items-center justify-center py-2.5 text-sm font-sans font-bold rounded-lg transition-all cursor-pointer ${
+            className={`flex-1 flex gap-2 items-center justify-center py-2.5 text-sm font-sans font-bold rounded-lg transition-all cursor-pointer ${
               activeTab === 'preview'
                 ? 'bg-slate-800 text-white shadow-md border border-slate-700/60 bg-gradient-to-r from-slate-800 to-slate-850'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <FileText className="w-4 h-4 text-sky-400" />
-            Manuscript Preview
+            <LayoutList className="w-4 h-4 text-sky-400" />
+            Assembly Board
           </button>
 
           <button
@@ -501,18 +486,12 @@ export default function Editor() {
               activeDraft={activeDraft}
               onUpdateDraft={handleUpdateDraft}
               onDeleteDraft={handleDeleteDraft}
-            />
-          )}
-
-          {activeTab === 'visualizer' && (
-            <StoryArcVisualizer
-              draft={activeDraft}
-              onUpdateDraft={handleUpdateDraft}
+              onNavigateToAssembly={() => switchTab('preview')}
             />
           )}
 
           {activeTab === 'preview' && (
-            <StoryPreview
+            <AssemblyBoard
               draft={activeDraft}
               onUpdateDraft={handleUpdateDraft}
             />
@@ -560,7 +539,7 @@ export default function Editor() {
             </div>
 
             <div className="bg-slate-950/50 border border-slate-850 p-4 rounded-xl space-y-2 font-sans text-sm">
-              <p className="text-slate-400">To authorize this catastrophic reset, enter the word <strong className="text-rose-400 font-mono tracking-wider font-bold">"RESET"</strong> below:</p>
+              <p className="text-slate-400">To authorize this catastrophic reset, enter the word <strong className="text-rose-400 font-sans tracking-wider font-bold">"RESET"</strong> below:</p>
               <input
                 id="reset_verification_word"
                 type="text"
@@ -658,7 +637,7 @@ export default function Editor() {
             <p className="text-sm font-serif italic text-cyan-400 tracking-wide font-normal animate-pulse leading-normal">
               {resetLoadingMsg}
             </p>
-            <p className="text-sm font-mono text-slate-600 uppercase tracking-widest leading-none">
+            <p className="text-sm font-sans text-slate-600 uppercase tracking-widest leading-none">
               Studio Sandbox Calibration
             </p>
           </div>

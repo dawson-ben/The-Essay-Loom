@@ -33,32 +33,45 @@ import {
 interface Chapter {
   id: number;
   title: string;
-  tldr: string;
+  tldr: string | React.ReactNode;
 }
 
 const CHAPTERS: Chapter[] = [
   {
     id: 1,
     title: "The Hero’s Journey",
-    tldr: "In 1949, Literature professor Joseph Campbell identified a pattern in great stories that spans cultures and centuries. This summary of he Hero's Journey will suffice for our purposes:\n\nWe meet the protagonist in their ordinary, everyday, familiar world. A disrupting event or messages forces the hero to confront a change, opportunity, or threat. At first, the hero is reluctant, afraid, or insecure about this disruption. But the hero commits to the journey, leaving their comfort zone for the unknown.\n\nMost of the story is the 'rising action': The hero navigates the new environment, learns its rules (perhaps stumbling and recovering along the way), makes allies and enemies. The hero eventually reaches the climax, the ordeal, where they face their greatest challenge, requiring them to apply what they have learned to survive.\n\nThe hero survives the ordeal and returns permanently transformed, bringing back a solution, power, or wisdom to benefit their community.\n\nYou don’t need to invent a new structure from scratch; you just need to map your truth onto these proven narrative beats."
+    tldr: (
+      <>
+        <p>In his famous 1949 book <em>The Hero with a Thousand Faces</em>, literature professor Joseph Campbell identified a pattern in great stories that spans cultures and centuries. It operates like a universal rhythm—a specific sequence of narrative beats proven to capture and hold human attention.</p>
+        
+        <p>When you hear "The Hero's Journey," you might imagine classic fantasy novels, blockbuster movies, or epic quests to save the world. But we can use this same pattern to tell the quiet, "everyday" stories of our lives with resonant power, too. It is the exact same engine that drives stories about small moments of personal growth, overcoming a private fear, or shifting your perspective. You don't need to have fought a literal dragon to use this roadmap.</p>
+        
+        <p>You don’t need to invent a new structure from scratch; you just need to map your truth onto these proven narrative beats.</p>
+      </>
+    )
   },
   {
     id: 2,
-    title: "Pixar's 22 Rules of Storytelling",
-    tldr: "Now that you have your timeline, you need the physics of emotional resonance. We’ll take the 22 Rules of Storytelling from the master screenwriters at Pixar and apply them to writing a true college essay."
+    title: "Comparing Narrative Arcs",
+    tldr: "To truly understand the Hero's Journey, it helps to see it in action across several stories. In this chapter, explore how several complete arcs from familiar stories, and a few example essay outlines, map onto the same narrative beats. This comparative view reveals how different stories, despite their unique details, share the same underlying rhythm. Stories (and your essay) also don't have to follow a rigid template; look for examples where these stories subvert the pattern, skip stages, or ground them in everyday reality."
   },
   {
     id: 3,
-    title: "Cinematic Techniques",
-    tldr: "Write like a film director. We'll show you how to use 'Bullet Time' to make your climax unforgettable, and the 'Montage' to condense years of history into a few punchy sentences."
+    title: "Pixar's 22 Rules of Storytelling",
+    tldr: "Once you've laid out your your timeline, you need the physics of emotional resonance. We’ll look at how to apply the 22 Rules of Storytelling from the master screenwriters at Pixar to writing a true college essay. We've listed Pixar's rules in their original order below; click \"Apply the Rules\" to reorganize them to see how they apply to our framework."
   },
   {
     id: 4,
+    title: "Cinematic Techniques",
+    tldr: "Write like a film director. We'll show you how to use 'Bullet Time' to make your climax memorable, and the 'Montage' to condense years of history or several moments into a few punchy images."
+  },
+  {
+    id: 5,
     title: "Breaking the Rules",
     tldr: "The Hero's Journey is a structural framework, not a rigid algorithm. Once you understand the baseline, you can intentionally subvert expectations to make your essay unforgettable."
   },
   {
-    id: 5,
+    id: 6,
     title: "Assembly & Reordering Options",
     tldr: "Your final essay doesn't have to be told in perfectly chronological order. We’ll show you how to flexibly arrange your raw ingredients to create powerful structural hooks."
   }
@@ -310,6 +323,14 @@ export default function InteractiveGuidebook() {
   const isFirst = currentChapter.id === 1;
   const isLast = currentChapter.id === CHAPTERS.length;
 
+
+  const getTabClass = (isActive: boolean) => 
+    `py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center border ${
+      isActive 
+        ? 'bg-blue-600 border-blue-600 text-blue-50 shadow-md'
+        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+    }`;
+
   return (
     <div id="interactive_guidebook_view" className="w-full mx-auto p-4 md:p-8 space-y-12 pb-32 animate-fade-in">
       
@@ -318,13 +339,33 @@ export default function InteractiveGuidebook() {
         
         {/* Chapter Header */}
         <div className="p-6 md:p-8 bg-slate-950/80 border-b border-slate-850/60 space-y-3">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-1.5">
+              {CHAPTERS.map(ch => (
+                <div 
+                  key={ch.id} 
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    ch.id === currentChapter.id 
+                      ? 'w-6 bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]' 
+                      : ch.id < currentChapter.id 
+                        ? 'w-1.5 bg-blue-900/60' 
+                        : 'w-1.5 bg-slate-800'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-slate-500 ml-2 font-bold font-sans uppercase tracking-wider">
+              Chapter {currentChapter.id} of {CHAPTERS.length}
+            </span>
+          </div>
+          
           <h3 className="text-xl md:text-2xl font-serif font-bold text-white tracking-tight">
             {currentChapter.title}
           </h3>
           <div className="text-sm text-slate-300 leading-relaxed font-sans space-y-4">
-            {currentChapter.tldr.split('\n\n').map((paragraph, idx) => (
+            {typeof currentChapter.tldr === 'string' ? currentChapter.tldr.split('\n\n').map((paragraph, idx) => (
               <p key={idx}>{paragraph}</p>
-            ))}
+            )) : currentChapter.tldr}
           </div>
         </div>
 
@@ -342,7 +383,7 @@ export default function InteractiveGuidebook() {
                               <Compass className="w-4 h-4 text-cyan-400" />
                               The Journey's Narrative Beats
                             </h4>
-                            <p className="text-[15px] sm:text-base text-slate-400">Click a narrative stage to see how the selected heroes traverse it.</p>
+                            <p className="text-[15px] sm:text-base text-slate-400">Click through the narrative stages below and choose characters to see examples.</p>
                           </div>
 
                           {/* Horizontal Beats Pills */}
@@ -365,11 +406,19 @@ export default function InteractiveGuidebook() {
                         {/* Selected Beat Explanation panel */}
                         {(() => {
                           const cur = BEATS_EXPLANATIONS[activeBeat];
-                          return (
+                        
+  const getTabClass = (isActive: boolean) => 
+    `py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center border ${
+      isActive 
+        ? 'bg-blue-600 border-blue-600 text-blue-50 shadow-md'
+        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+    }`;
+
+  return (
                             <div className="bg-slate-950 border border-slate-850 rounded-2xl p-6 space-y-6">
                               <div className="space-y-4">
                                 <div className="flex items-center justify-between border-b border-slate-900 pb-3">
-                                  <div className="text-sm uppercase font-mono tracking-widest font-extrabold text-cyan-400">
+                                  <div className="text-sm uppercase font-sans tracking-widest font-extrabold text-cyan-400">
                                     Stage {activeBeat + 1} of 10
                                   </div>
                                   <div className="flex items-center gap-2">
@@ -401,7 +450,7 @@ export default function InteractiveGuidebook() {
                                 </p>
                                 {cur.essayDesc && (
                                   <div className="bg-blue-950/30 border border-blue-500/20 p-3 rounded-xl mt-3 space-y-1">
-                                    <div className="text-sm font-mono tracking-widest font-bold text-blue-400 uppercase">
+                                    <div className="text-sm font-sans tracking-widest font-bold text-blue-400 uppercase">
                                       In Your Essay
                                     </div>
                                     <p className="text-sm text-blue-200/90 leading-relaxed font-sans">
@@ -429,7 +478,15 @@ export default function InteractiveGuidebook() {
                                     else if (cur.key === 'payoff') charText = char.payoff;
                                     else if (cur.key === 'elixir') charText = char.elixir;
 
-                                    return (
+                                  
+  const getTabClass = (isActive: boolean) => 
+    `py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center border ${
+      isActive 
+        ? 'bg-blue-600 border-blue-600 text-blue-50 shadow-md'
+        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+    }`;
+
+  return (
                                       <div key={char.id} className="bg-slate-900 border border-slate-850/80 p-4 rounded-xl space-y-2 hover:border-slate-800 transition-colors">
                                         <div className="flex items-center justify-between">
                                           <span className="text-sm font-bold text-slate-200">{char.name}</span>
@@ -461,7 +518,15 @@ export default function InteractiveGuidebook() {
                           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 pt-1 h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-800">
                             {POP_CHARACTERS.map(char => {
                               const isSelected = selectedChars.includes(char.id);
-                              return (
+                            
+  const getTabClass = (isActive: boolean) => 
+    `py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center border ${
+      isActive 
+        ? 'bg-blue-600 border-blue-600 text-blue-50 shadow-md'
+        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+    }`;
+
+  return (
                                 <button
                                   key={char.id}
                                   onClick={() => toggleCharSelection(char.id)}
@@ -486,17 +551,20 @@ export default function InteractiveGuidebook() {
                           </div>
                         </div>
 
-                        {/* Comparative Narrative Map Expanded Feature */}
-                        <div className="p-6 md:p-8 border-t border-slate-800/60">
-                           <HerosJourneyCompare />
-                        </div>
                       </div>
                     )}
 
 
-                    {/* Chapter 2: The Pixar Principles */}
+                    {/* Chapter 2: Comparing Narrative Arcs */}
                     {currentChapter.id === 2 && (
-                      <div className="space-y-8" id="expanded_chapter_2_view">
+                      <div className="space-y-8 animate-fade-in" id="expanded_chapter_2_view">
+                        <HerosJourneyCompare />
+                      </div>
+                    )}
+
+                    {/* Chapter 3: The Pixar Principles */}
+                    {currentChapter.id === 3 && (
+                      <div className="space-y-8" id="expanded_chapter_3_view">
                         
                         {/* Interactive Grid Area */}
                         <div className="space-y-4 bg-slate-950 p-6 rounded-2xl border border-slate-850 overflow-hidden relative">
@@ -544,7 +612,7 @@ export default function InteractiveGuidebook() {
                                         transition={{ duration: 0.8, type: "spring", bounce: 0.15 }}
                                         className="px-3 py-2 bg-slate-900 border border-slate-800/80 text-slate-300 rounded-lg text-left shadow-sm flex flex-col justify-center"
                                       >
-                                        <div className="text-sm font-mono font-bold mb-0.5 text-slate-500">Rule #{r.num}</div>
+                                        <div className="text-sm font-sans font-bold mb-0.5 text-slate-500">Rule #{r.num}</div>
                                         <p className="text-[15px] leading-relaxed font-sans">{r.rule}</p>
                                       </motion.div>
                                     ))}
@@ -573,14 +641,22 @@ export default function InteractiveGuidebook() {
                                           {group.rules.map(ruleNum => {
                                             const r = PIXAR_RULES.find(rule => rule.num === ruleNum);
                                             if (!r) return null;
-                                            return (
+                                          
+  const getTabClass = (isActive: boolean) => 
+    `py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center border ${
+      isActive 
+        ? 'bg-blue-600 border-blue-600 text-blue-50 shadow-md'
+        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+    }`;
+
+  return (
                                             <div key={r.num} className="grid md:grid-cols-2 gap-4 items-center bg-slate-900/40 p-3 rounded-xl border border-slate-850">
                                               <motion.div 
                                                 layoutId={`rule-${r.num}`}
                                                 transition={{ duration: 0.8, type: "spring", bounce: 0.15 }}
                                                 className="p-3 bg-slate-900 border border-slate-800/80 text-slate-300 rounded-lg text-left shadow-sm h-full flex flex-col justify-center"
                                               >
-                                                <div className="text-sm font-mono font-bold mb-1 text-slate-500">Rule #{r.num}</div>
+                                                <div className="text-sm font-sans font-bold mb-1 text-slate-500">Rule #{r.num}</div>
                                                 <p className="text-[15px] leading-relaxed font-sans">{r.rule}</p>
                                               </motion.div>
                                               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.5 }} className="text-[15px] text-slate-300 leading-relaxed font-sans pr-4">
@@ -602,9 +678,9 @@ export default function InteractiveGuidebook() {
                     )}
 
 
-                    {/* Chapter 3: Cinematic Techniques */}
-                    {currentChapter.id === 3 && (
-                      <div className="space-y-6" id="expanded_chapter_3_view">
+                    {/* Chapter 4: Cinematic Techniques */}
+                    {currentChapter.id === 4 && (
+                      <div className="space-y-6" id="expanded_chapter_4_view">
                         <div className="bg-slate-950 border border-slate-850 rounded-xl p-6 space-y-4">
                           <div className="space-y-1">
                             <h4 className="text-sm font-sans font-bold text-white">Bullet Time</h4>
@@ -617,13 +693,13 @@ export default function InteractiveGuidebook() {
 
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2">
-                              <span className="text-sm text-rose-400 font-mono uppercase tracking-wider block">❌ Abstract Telling (Lazy)</span>
+                              <span className="text-sm text-rose-400 font-sans uppercase tracking-wider block">❌ Abstract Telling (Lazy)</span>
                               <p className="text-sm text-slate-300 italic font-serif leading-relaxed">
                                 "I got really anxious and nervous when the lesson started because I felt unqualified and feared I would fail."
                               </p>
                             </div>
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2 border-l-4 border-l-blue-500">
-                              <span className="text-sm text-cyan-400 font-mono uppercase tracking-wider block">✅ Grounded Showing Bullet Time (Resonant)</span>
+                              <span className="text-sm text-cyan-400 font-sans uppercase tracking-wider block">✅ Grounded Showing Bullet Time (Resonant)</span>
                               <p className="text-sm text-blue-200 italic font-serif leading-relaxed">
                                 "I rubbed the dry chalk off my fingertips and squeezed the cold metal railing of the pool deck. Forty elementary campers looked up at me simultaneously, their voices melting into a hot midday haze."
                               </p>
@@ -641,39 +717,39 @@ export default function InteractiveGuidebook() {
 
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2">
-                              <span className="text-sm text-rose-400 font-mono uppercase tracking-wider block">❌ Chronological Catalog (Dry)</span>
+                              <span className="text-sm text-rose-400 font-sans uppercase tracking-wider block">❌ Chronological Catalog (Dry)</span>
                               <p className="text-sm text-slate-300 italic font-serif leading-relaxed">
                                 "I joined the robotic sciences club in 9th grade, then became director in 11th grade, and worked on the control interfaces team last summer."
                               </p>
                             </div>
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2 border-l-4 border-l-blue-500">
-                              <span className="text-sm text-cyan-400 font-mono uppercase tracking-wider block">✅ Thematic Montage Form (Resonant)</span>
+                              <span className="text-sm text-cyan-400 font-sans uppercase tracking-wider block">✅ Thematic Montage Form (Resonant)</span>
                               <p className="text-sm text-blue-200 italic font-serif leading-relaxed">
                                 "At fourteen, robotics was the smell of grease on a kitchen floor. At sixteen, it was the cold aluminum of chassis frames. At seventeen, it was thirty lines of code compiled at 2 AM before the launch."
                               </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2">
-                              <span className="text-sm text-rose-400 font-mono uppercase tracking-wider block">❌ Generic Setting (Boring)</span>
+                              <span className="text-sm text-rose-400 font-sans uppercase tracking-wider block">❌ Generic Setting (Boring)</span>
                               <p className="text-sm text-slate-300 italic font-serif leading-relaxed">
                                 "Before the debate tournament, it was very chaotic in the preparation room as everyone was stressed out and getting ready."
                               </p>
                             </div>
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2 border-l-4 border-l-blue-500">
-                              <span className="text-sm text-cyan-400 font-mono uppercase tracking-wider block">✅ Atmospheric Chaos (Resonant)</span>
+                              <span className="text-sm text-cyan-400 font-sans uppercase tracking-wider block">✅ Atmospheric Chaos (Resonant)</span>
                               <p className="text-sm text-blue-200 italic font-serif leading-relaxed">
                                 "The prep room was a whirlwind of uncapped highlighters, scattered legal pads, and the frantic clicking of sixty laptop keyboards fighting the five-minute warning."
                               </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2">
-                              <span className="text-sm text-rose-400 font-mono uppercase tracking-wider block">❌ Abstract Calm (Vague)</span>
+                              <span className="text-sm text-rose-400 font-sans uppercase tracking-wider block">❌ Abstract Calm (Vague)</span>
                               <p className="text-sm text-slate-300 italic font-serif leading-relaxed">
                                 "The football practice field was very quiet early in the morning before people arrived."
                               </p>
                             </div>
                             <div className="bg-slate-900 border border-slate-850 p-4 rounded-lg space-y-2 border-l-4 border-l-blue-500">
-                              <span className="text-sm text-cyan-400 font-mono uppercase tracking-wider block">✅ Atmospheric Stillness (Resonant)</span>
+                              <span className="text-sm text-cyan-400 font-sans uppercase tracking-wider block">✅ Atmospheric Stillness (Resonant)</span>
                               <p className="text-sm text-blue-200 italic font-serif leading-relaxed">
                                 "The practice field at dawn was nothing but frost clinging to the fifty-yard line, the distant hum of the stadium lights warming up, and my breath hanging suspended in the crisp air."
                               </p>
@@ -687,33 +763,33 @@ export default function InteractiveGuidebook() {
                             A Note on Word Economy
                           </h4>
                           <p className="text-sm text-slate-300 font-sans leading-relaxed">
-                            Looking at these examples, you might think "showing" takes too many words. It's true that a Bullet Time sentence is longer than "I was nervous." However, a strong sensory description or a thematic montage actually <em className="text-blue-200">saves</em> words overall. By capturing the essence of an experience in a few vivid details, you eliminate the need for paragraphs of back-story and dry exposition. You trade 100 words of boring summary for 30 words of unforgettable imagery.
+                            Looking at these examples, you might think "showing" takes too many words. It's true that a Bullet Time sentence is longer than "I was nervous." However, a strong sensory description or a thematic montage actually <em className="text-blue-200">saves</em> words overall. By capturing the essence of an experience in a few vivid details, you eliminate the need for paragraphs of back-story and dry exposition. You trade 100 words of boring summary for 30 words of vivid imagery.
                           </p>
                         </div>
                       </div>
                     )}
 
 
-                    {/* Chapter 4: Knowing When to Break the Rules */}
-                    {currentChapter.id === 4 && (
-                      <div className="space-y-6" id="expanded_chapter_4_view">
+                    {/* Chapter 5: Knowing When to Break the Rules */}
+                    {currentChapter.id === 5 && (
+                      <div className="space-y-6" id="expanded_chapter_5_view">
                         <div className="space-y-2">
                           <h4 className="text-sm font-sans font-bold text-white flex items-center gap-1.5 text-blue-400">
                             <AlertTriangle className="w-4 h-4 text-amber-500" />
                             Aesthetic Rule-Subversions Selector
                           </h4>
                           <p className="text-sm text-slate-300 leading-relaxed font-sans">
-                            A well-placed subversion—where you lead the reader down a familiar path and then pull the rug out—creates genuine surprise. Choose a subversion strategy to see its screenplay application:
+                            A well-placed subversion—where you lead the reader down a familiar path and then pull the rug out—creates genuine surprise. You do NOT have to break any rules to make a great essay, but explore the approaches below to see some that might fit your story.
                           </p>
                         </div>
 
                         {/* Layout grid cards */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                           {[
-                            { id: 'failed_ordeal', label: "The Failed Ordeal", icon: "💥" },
-                            { id: 'wrong_dragon', label: "The Wrong Dragon", icon: "🐲" },
-                            { id: 'unexpected_catalyst', label: "Unexpected Catalyst", icon: "🗝️" },
-                            { id: 'commitment_ordeal', label: "Commitment was Ordeal", icon: "🚪" }
+                            { id: 'failed_ordeal', label: "The Failed Ordeal" },
+                            { id: 'wrong_dragon', label: "The Wrong Dragon" },
+                            { id: 'unexpected_catalyst', label: "Unexpected Catalyst" },
+                            { id: 'commitment_ordeal', label: "Commitment was Ordeal" }
                           ].map(sub => (
                             <button
                               key={sub.id}
@@ -724,7 +800,6 @@ export default function InteractiveGuidebook() {
                                   : 'bg-slate-950 border-slate-850 text-slate-400 hover:border-slate-800'
                               }`}
                             >
-                              <div className="text-xl mb-1">{sub.icon}</div>
                               <span className="text-sm font-sans font-bold block">{sub.label}</span>
                             </button>
                           ))}
@@ -737,7 +812,7 @@ export default function InteractiveGuidebook() {
                             <p className="text-slate-300 leading-relaxed">
                               You do not actually have to <strong>win</strong> the battle to get the prize. Sometimes the most powerful essays happen when you completely fail the Ordeal, but the deep reflection on that failure becomes your Elixir. Losing the tournament, breaking the prototype, or having your campers stage a mutiny can teach you vastly more about leadership and resilience than a flawless, easy victory.
                             </p>
-                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-mono text-blue-300">
+                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-sans text-blue-300">
                               <strong>Core Principle:</strong> High-level maturity shines through failure. Relentless vulnerability beats a fake trophy.
                             </div>
                           </div>
@@ -749,7 +824,7 @@ export default function InteractiveGuidebook() {
                             <p className="text-slate-300 leading-relaxed">
                               You spend the whole essay preparing for one specific challenge, but when you arrive at the Ordeal, the test is entirely different. You spent weeks memorizing the technical manual to pass a robotics inspection, but the real test ended up being navigating the interpersonal conflict of your stressed-out team.
                             </p>
-                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-mono text-blue-300">
+                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-sans text-blue-300">
                               <strong>Core Principle:</strong> Highlights self-awareness. It proves you can step back and see the larger human picture.
                             </div>
                           </div>
@@ -761,7 +836,7 @@ export default function InteractiveGuidebook() {
                             <p className="text-slate-300 leading-relaxed">
                               The realization that saves you doesn't have to be a profound quote from a mentor or a sudden stroke of genius. It can be a joke, a mundane observation, or even the realization that the advice you were given is actually completely wrong. Using a "broken" compass to find your way out of the woods shows deep, independent critical thinking.
                             </p>
-                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-mono text-blue-300">
+                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-sans text-blue-300">
                               <strong>Core Principle:</strong> Demonstrates raw intellectual independence and curiosity.
                             </div>
                           </div>
@@ -773,7 +848,7 @@ export default function InteractiveGuidebook() {
                             <p className="text-slate-300 leading-relaxed">
                               Sometimes the hardest part of the journey isn't the final test, but simply taking the first step. You might find that crossing the threshold (e.g., finally standing up to speak, submitting the flawed design, or admitting you need help) was the true climax of your story, and everything that followed was just the falling action.
                             </p>
-                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-mono text-blue-300">
+                            <div className="mt-3 bg-blue-950/20 p-3 rounded border border-blue-900/30 text-sm font-sans text-blue-300">
                               <strong>Core Principle:</strong> Shows immense internal courage. It turns a quiet personal block into a massive milestone.
                             </div>
                           </div>
@@ -789,9 +864,9 @@ export default function InteractiveGuidebook() {
                     )}
 
 
-                    {/* Chapter 5: Assembly & Reordering Options */}
-                    {currentChapter.id === 5 && (
-                      <div className="space-y-6" id="expanded_chapter_5_view">
+                    {/* Chapter 6: Assembly & Reordering Options */}
+                    {currentChapter.id === 6 && (
+                      <div className="space-y-6" id="expanded_chapter_6_view">
                         <div className="space-y-2">
                           <h4 className="text-sm font-sans font-bold text-white flex items-center gap-1.5 text-blue-400">
                             <Shuffle className="w-4 h-4" />
@@ -806,71 +881,43 @@ export default function InteractiveGuidebook() {
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                           <button
                             onClick={() => setSelectedStructuralPattern('chronological')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'chronological'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'chronological')}
                           >
                             Timeline Chain
                           </button>
                           <button
                             onClick={() => setSelectedStructuralPattern('medias_res')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'medias_res'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'medias_res')}
                           >
                             In Medias Res
                           </button>
                           <button
                             onClick={() => setSelectedStructuralPattern('elixir_hook')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'elixir_hook'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'elixir_hook')}
                           >
                             Elixir Hook
                           </button>
                           <button
                             onClick={() => setSelectedStructuralPattern('post_mortem')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'post_mortem'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'post_mortem')}
                           >
                             The Post-Mortem
                           </button>
                           <button
                             onClick={() => setSelectedStructuralPattern('catalyst_anchor')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'catalyst_anchor'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'catalyst_anchor')}
                           >
                             The Catalyst Anchor
                           </button>
                           <button
                             onClick={() => setSelectedStructuralPattern('reluctant_hook')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'reluctant_hook'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'reluctant_hook')}
                           >
                             The Reluctant Hook
                           </button>
                           <button
                             onClick={() => setSelectedStructuralPattern('parallel_track')}
-                            className={`py-1.5 px-2 text-sm font-sans font-bold rounded-lg transition-colors cursor-pointer text-center ${
-                              selectedStructuralPattern === 'parallel_track'
-                                ? 'bg-blue-600 text-white shadow'
-                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
-                            }`}
+                            className={getTabClass(selectedStructuralPattern === 'parallel_track')}
                           >
                             The Parallel Track
                           </button>
@@ -880,13 +927,13 @@ export default function InteractiveGuidebook() {
                         {selectedStructuralPattern === 'chronological' && (
                           <div className="space-y-4 animate-fade-in font-sans text-sm">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80">
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-350 rounded-lg text-center font-bold">1. Ordinary World</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">1. Ordinary World</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-350 rounded-lg text-center font-bold">2. Catalyst/Incident</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Catalyst/Incident</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-350 rounded-lg text-center font-bold">3. Trial/Ordeal</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Trial/Ordeal</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/35 border border-blue-700/30 text-blue-300 rounded-lg text-center font-bold">4. Transformation Elixir</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Transformation Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Standard Chronological Pattern</h5>
@@ -902,11 +949,11 @@ export default function InteractiveGuidebook() {
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80">
                               <span className="px-3.5 py-1.5 bg-blue-900/35 border border-blue-700 hover:border-blue-500 text-blue-100 rounded-lg text-center font-extrabold shadow">1. Ordeal / Climax (Hook)</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">2. Ordinary World (Flashback)</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World (Flashback)</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">3. Catalyst/Action</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Catalyst/Action</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/20 border border-blue-900/30 text-blue-300 rounded-lg text-center">4. Elixir Resolution</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir Resolution</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">In Medias Res (The Action Hook)</h5>
@@ -920,13 +967,13 @@ export default function InteractiveGuidebook() {
                         {selectedStructuralPattern === 'elixir_hook' && (
                           <div className="space-y-4 animate-fade-in font-sans text-sm">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80">
-                              <span className="px-3.5 py-1.5 bg-blue-900/35 border border-blue-700/40 text-blue-100 rounded-lg text-center font-extrabold shadow">1. Present-Day Elixir Hook</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">1. Present-Day Elixir Hook</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">2. Ordinary World (Start)</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World (Start)</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">3. Trial Run & Ordeal</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Trial Run & Ordeal</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/20 border border-blue-900/30 text-blue-300 rounded-lg text-center">4. Completed Arc Summary</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Completed Arc Summary</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Elixir Hook</h5>
@@ -940,15 +987,15 @@ export default function InteractiveGuidebook() {
                         {selectedStructuralPattern === 'post_mortem' && (
                           <div className="space-y-4 animate-fade-in font-sans text-sm">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
-                              <span className="px-3.5 py-1.5 bg-rose-900/40 border border-rose-700/40 text-rose-100 rounded-lg text-center font-extrabold shadow">1. Ordeal (The Failure)</span>
+                              <span className="px-3 py-1.5 bg-rose-900/30 border border-rose-800/50 text-rose-400 rounded-lg text-center font-bold shadow-sm">1. Ordeal (The Failure)</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">2. Incident (The Rebuild)</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Incident (The Rebuild)</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">3. Special World</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Special World</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">4. Winning Action</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">4. Winning Action</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/20 border border-blue-900/30 text-blue-300 rounded-lg text-center">5. Elixir</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Post-Mortem (The Failed Ordeal First)</h5>
@@ -962,15 +1009,15 @@ export default function InteractiveGuidebook() {
                         {selectedStructuralPattern === 'catalyst_anchor' && (
                           <div className="space-y-4 animate-fade-in font-sans text-sm">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
-                              <span className="px-3.5 py-1.5 bg-amber-900/40 border border-amber-700/40 text-amber-100 rounded-lg text-center font-extrabold shadow">1. Catalyst (Object/Memory)</span>
+                              <span className="px-3 py-1.5 bg-amber-900/30 border border-amber-800/50 text-amber-400 rounded-lg text-center font-bold shadow-sm">1. Catalyst (Object/Memory)</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">2. Ordinary World</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">3. Incident & Ordeal</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Incident & Ordeal</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">4. Winning Action</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">4. Winning Action</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/20 border border-blue-900/30 text-blue-300 rounded-lg text-center">5. Elixir</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Catalyst Anchor (The Object Lesson)</h5>
@@ -984,15 +1031,15 @@ export default function InteractiveGuidebook() {
                         {selectedStructuralPattern === 'reluctant_hook' && (
                           <div className="space-y-4 animate-fade-in font-sans text-sm">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
-                              <span className="px-3.5 py-1.5 bg-teal-900/40 border border-teal-700/40 text-teal-100 rounded-lg text-center font-extrabold shadow">1. Doubts & Hesitation</span>
+                              <span className="px-3 py-1.5 bg-teal-900/30 border border-teal-800/50 text-teal-400 rounded-lg text-center font-bold shadow-sm">1. Doubts & Hesitation</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">2. Ordinary World</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">3. Incident</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Incident</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center">4. Commitment & Ordeal</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">4. Commitment & Ordeal</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/20 border border-blue-900/30 text-blue-300 rounded-lg text-center">5. Elixir</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Reluctant Hook (Starting with Hesitation)</h5>
@@ -1006,17 +1053,17 @@ export default function InteractiveGuidebook() {
                         {selectedStructuralPattern === 'parallel_track' && (
                           <div className="space-y-4 animate-fade-in font-sans text-sm">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
-                              <span className="px-3.5 py-1.5 bg-purple-900/30 border border-purple-700/40 text-purple-200 rounded-lg text-center">1. Ordinary World A</span>
+                              <span className="px-3 py-1.5 bg-purple-900/30 border border-purple-800/50 text-purple-400 rounded-lg text-center font-bold shadow-sm">1. Ordinary World A</span>
                               <span className="text-slate-500">vs</span>
-                              <span className="px-3.5 py-1.5 bg-fuchsia-900/30 border border-fuchsia-700/40 text-fuchsia-200 rounded-lg text-center">2. Special World B</span>
+                              <span className="px-3 py-1.5 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 rounded-lg text-center font-bold shadow-sm">2. Special World B</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-purple-900/30 border border-purple-700/40 text-purple-200 rounded-lg text-center">3. Incident A</span>
+                              <span className="px-3 py-1.5 bg-purple-900/30 border border-purple-800/50 text-purple-400 rounded-lg text-center font-bold shadow-sm">3. Incident A</span>
                               <span className="text-slate-500">vs</span>
-                              <span className="px-3.5 py-1.5 bg-fuchsia-900/30 border border-fuchsia-700/40 text-fuchsia-200 rounded-lg text-center">4. Ordeal B</span>
+                              <span className="px-3 py-1.5 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 rounded-lg text-center font-bold shadow-sm">4. Ordeal B</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/40 border border-blue-500/50 text-blue-100 rounded-lg text-center font-extrabold shadow">5. Convergence</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Convergence</span>
                               <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3.5 py-1.5 bg-blue-900/20 border border-blue-900/30 text-blue-300 rounded-lg text-center">6. Elixir</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">6. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Parallel Track (The Dual Timeline)</h5>
@@ -1044,6 +1091,21 @@ export default function InteractiveGuidebook() {
             <ArrowLeft className="w-4 h-4" />
             Previous Chapter
           </button>
+          
+          <div className="hidden sm:flex items-center gap-1.5">
+            {CHAPTERS.map(ch => (
+              <div 
+                key={ch.id} 
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  ch.id === currentChapter.id 
+                    ? 'w-4 bg-blue-500' 
+                    : ch.id < currentChapter.id 
+                      ? 'w-1.5 bg-blue-900/60' 
+                      : 'w-1.5 bg-slate-800'
+                }`}
+              />
+            ))}
+          </div>
 
           {isLast ? (
             <button

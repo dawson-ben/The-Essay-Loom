@@ -1,0 +1,17 @@
+import sys
+
+with open("src/components/InteractiveGuidebook.tsx", "r") as f:
+    content = f.read()
+
+# I will replace the unescaped double quotes inside the tldr with escaped ones or single quotes.
+# Actually let's just replace the whole tldr string properly using regex or exact replace.
+
+bad_string = 'tldr: "In 1949, Literature professor Joseph Campbell identified a pattern in great stories that spans cultures and centuries.\\n\\nWhen you hear "The Hero\'s Journey," you might think of classic fantasy novels or other stories with a lot of dramatic action. But this exact same pattern applies perfectly to the quiet, "everyday" stories of our lives, too—the small moments of personal growth, the overcoming of a fear, or the shift in a perspective. You don\'t need to have gone on some long journey or fought a dragon to use this roadmap.\\n\\nThis summary of the Hero\'s Journey will suffice for our purposes:\\n\\nWe meet the protagonist in their ordinary, everyday, familiar world. A disrupting event or messages forces the hero to confront a change, opportunity, or threat. At first, the hero is reluctant, afraid, or insecure about this disruption. But the hero commits to the journey, leaving their comfort zone for the unknown.\\n\\nMost of the story is the \'rising action\': The hero navigates the new environment, learns its rules (perhaps stumbling and recovering along the way), makes allies and enemies. The hero eventually reaches the climax, the ordeal, where they face their greatest challenge, requiring them to apply what they have learned to survive.\\n\\nThe hero survives the ordeal and returns permanently transformed, bringing back a solution, power, or wisdom to benefit their community.\\n\\nYou don’t need to invent a new structure from scratch; you just need to map your truth onto these proven narrative beats."'
+
+good_string = 'tldr: "In 1949, Literature professor Joseph Campbell identified a pattern in great stories that spans cultures and centuries.\\n\\nWhen you hear \\"The Hero\'s Journey,\\" you might think of classic fantasy novels or other stories with a lot of dramatic action. But this exact same pattern applies perfectly to the quiet, \\"everyday\\" stories of our lives, too—the small moments of personal growth, the overcoming of a fear, or the shift in a perspective. You don\'t need to have gone on some long journey or fought a dragon to use this roadmap.\\n\\nThis summary of the Hero\'s Journey will suffice for our purposes:\\n\\nWe meet the protagonist in their ordinary, everyday, familiar world. A disrupting event or messages forces the hero to confront a change, opportunity, or threat. At first, the hero is reluctant, afraid, or insecure about this disruption. But the hero commits to the journey, leaving their comfort zone for the unknown.\\n\\nMost of the story is the \'rising action\': The hero navigates the new environment, learns its rules (perhaps stumbling and recovering along the way), makes allies and enemies. The hero eventually reaches the climax, the ordeal, where they face their greatest challenge, requiring them to apply what they have learned to survive.\\n\\nThe hero survives the ordeal and returns permanently transformed, bringing back a solution, power, or wisdom to benefit their community.\\n\\nYou don’t need to invent a new structure from scratch; you just need to map your truth onto these proven narrative beats."'
+
+content = content.replace(bad_string, good_string)
+
+with open("src/components/InteractiveGuidebook.tsx", "w") as f:
+    f.write(content)
+

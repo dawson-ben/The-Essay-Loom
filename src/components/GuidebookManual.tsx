@@ -49,7 +49,7 @@ function InjectedPitfallCard({ pitfall }: { pitfall: any }) {
           <AlertTriangle className="w-4 h-4 text-rose-400 animate-pulse shrink-0" />
           Cliché & Pitfall Warning: {pitfall.trap}
         </h4>
-        <span className="text-[11px] bg-rose-900/60 border border-rose-800/40 text-rose-300 font-semibold px-2 py-0.5 rounded font-mono uppercase tracking-wider">
+        <span className="text-[11px] bg-rose-900/60 border border-rose-800/40 text-rose-300 font-semibold px-2 py-0.5 rounded font-sans uppercase tracking-wider">
           Admissions Danger Zone
         </span>
       </div>
@@ -59,7 +59,7 @@ function InjectedPitfallCard({ pitfall }: { pitfall: any }) {
       </p>
 
       <div className="bg-amber-950/25 border border-amber-900/30 p-3.5 rounded text-xs text-amber-305 text-amber-200 font-sans leading-relaxed">
-        <span className="text-[11px] font-bold text-amber-400 flex items-center gap-1 mb-1 font-mono uppercase tracking-widest">
+        <span className="text-[11px] font-bold text-amber-400 flex items-center gap-1 mb-1 font-sans uppercase tracking-widest">
           <Lightbulb className="w-3.5 h-3.5 text-amber-400 inline" /> Re-centering Solution Fix
         </span>
         {pitfall.fix}
@@ -67,11 +67,11 @@ function InjectedPitfallCard({ pitfall }: { pitfall: any }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1 font-sans text-xs">
         <div className="bg-slate-950/80 border border-slate-850 rounded-lg p-3 text-slate-400">
-          <div className="text-[11px] font-bold text-rose-500 mb-1 uppercase tracking-wider font-mono">❌ Flawed Cliché:</div>
+          <div className="text-[11px] font-bold text-rose-500 mb-1 uppercase tracking-wider font-sans">❌ Flawed Cliché:</div>
           <p className="italic leading-relaxed font-serif text-[11px]">"{pitfall.exampleBad}"</p>
         </div>
         <div className="bg-teal-950/15 border border-teal-950/10 border-teal-905 block rounded-lg p-3 text-teal-300">
-          <div className="text-[11px] font-bold text-teal-400 mb-1 uppercase tracking-wider font-mono">✅ Resonant Screenwriter Showing:</div>
+          <div className="text-[11px] font-bold text-teal-400 mb-1 uppercase tracking-wider font-sans">✅ Resonant Screenwriter Showing:</div>
           <p className="italic leading-relaxed font-serif text-[11px]">"{pitfall.exampleGood}"</p>
         </div>
       </div>
@@ -178,7 +178,7 @@ export function GuidebookManual() {
                   }`}
                 >
                   <BeatIcon className={`w-4 h-4 ${isActive ? 'text-cyan-400 scale-110' : 'text-slate-500 group-hover:text-slate-400'}`} />
-                  <span className="text-[11px] font-mono font-bold tracking-tight uppercase block text-center truncate w-full max-w-[50px] md:max-w-none">
+                  <span className="text-[11px] font-sans font-bold tracking-tight uppercase block text-center truncate w-full max-w-[50px] md:max-w-none">
                     {beat.name.split('. ')[1]}
                   </span>
                 </button>
@@ -266,7 +266,7 @@ export function GuidebookManual() {
                               <td className="px-5 py-4 align-top space-y-1 shrink-0">
                                 <div className="flex items-center gap-1.5 flex-wrap">
                                   <span className="font-serif font-bold text-xs text-white leading-tight block">{story.title}</span>
-                                  {isStudent && <span className="text-[11px] bg-teal-500/10 border border-teal-500/20 text-teal-400 px-1.5 py-0.5 rounded font-mono font-semibold uppercase">Student Essay</span>}
+                                  {isStudent && <span className="text-[11px] bg-teal-500/10 border border-teal-500/20 text-teal-400 px-1.5 py-0.5 rounded font-sans font-semibold uppercase">Student Essay</span>}
                                 </div>
                                 <span className="text-[11px] text-slate-500 block font-normal font-sans">{story.creator}</span>
                               </td>
@@ -327,7 +327,7 @@ export function GuidebookManual() {
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <span className="text-xs font-mono text-slate-400">Beat {activeBeatIdx + 1} of 8</span>
+            <span className="text-xs font-sans text-slate-400">Beat {activeBeatIdx + 1} of 8</span>
             <button
               onClick={() => {
                 if (activeBeatIdx < 7) setActiveBeatIdx(prev => Math.min(7, prev + 1));
