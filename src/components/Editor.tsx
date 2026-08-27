@@ -6,9 +6,10 @@ import AssemblyBoard from './AssemblyBoard';
 import Handbook from './Handbook';
 import Scratchpad from './Scratchpad';
 import InteractiveGuidebook from './InteractiveGuidebook';
-import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp } from 'lucide-react';
+import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp, MessageSquare } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { fetchEssays, createEssay, updateEssay, deleteEssay } from '../db';
+import FeedbackModal from './FeedbackModal';
 
 export default function Editor() {
   const { user, logout } = useAuth();
@@ -21,6 +22,7 @@ export default function Editor() {
   const [showOnboarding, setShowOnboarding] = useState<boolean>(false);
   const [isScratchpadOpen, setIsScratchpadOpen] = useState(false);
   const [isGuidebookOpen, setIsGuidebookOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const [isDark, setIsDark] = useState<boolean>(() => {
     const saved = localStorage.getItem('college_essay_architect_theme');
     return saved !== 'light';
@@ -330,7 +332,7 @@ export default function Editor() {
         <div className="flex items-center gap-3">
           <div>
             <h1 className="text-lg font-sans font-bold text-white tracking-tight leading-none flex items-center gap-2">
-              Hero's Essay Blueprint
+              The Essay Loom
             </h1>
           </div>
         </div>
@@ -419,6 +421,14 @@ export default function Editor() {
             <RefreshCcw className="w-4 h-4" />
           </button>
 
+          <button
+            onClick={() => setIsFeedbackOpen(true)}
+            className="p-2.5 bg-slate-950 hover:bg-slate-900 text-slate-400 hover:text-teal-400 border border-slate-800 hover:border-slate-700 rounded-lg transition-all cursor-pointer shadow-sm"
+            title="Send Feedback"
+          >
+            <MessageSquare className="w-4 h-4" />
+          </button>
+
           {user ? (
             <button
               onClick={logout}
@@ -444,6 +454,18 @@ export default function Editor() {
       <main className="flex-1 w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-none mx-auto p-4 md:p-8 space-y-6">
         <nav className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1 bg-slate-900 border border-slate-800/80 p-1 text-slate-400 rounded-xl shadow-inner mx-auto max-w-4xl" id="master_navbar">
           <button
+            onClick={() => switchTab('guidebook')}
+            className={`flex-1 flex gap-2 items-center justify-center py-2.5 text-sm font-sans font-bold rounded-lg transition-all cursor-pointer ${
+              activeTab === 'guidebook'
+                ? 'bg-slate-800 text-white shadow-md border border-slate-700/60 bg-gradient-to-r from-slate-800 to-slate-850'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Compass className="w-4 h-4 text-cyan-400" />
+            Guidebook
+          </button>
+
+          <button
             onClick={() => switchTab('worksheet')}
             className={`flex-1 flex gap-2 items-center justify-center py-2.5 text-sm font-sans font-bold rounded-lg transition-all cursor-pointer ${
               activeTab === 'worksheet'
@@ -465,18 +487,6 @@ export default function Editor() {
           >
             <LayoutList className="w-4 h-4 text-sky-400" />
             Assembly Board
-          </button>
-
-          <button
-            onClick={() => switchTab('guidebook')}
-            className={`flex-1 flex gap-2 items-center justify-center py-2.5 text-sm font-sans font-bold rounded-lg transition-all cursor-pointer ${
-              activeTab === 'guidebook'
-                ? 'bg-slate-800 text-white shadow-md border border-slate-700/60 bg-gradient-to-r from-slate-800 to-slate-850'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <Compass className="w-4 h-4 text-cyan-400" />
-            Guidebook
           </button>
         </nav>
 
@@ -506,7 +516,7 @@ export default function Editor() {
       <footer className="mt-auto py-8 bg-slate-900/60 border-t border-slate-800/80 text-center text-sm text-slate-500 font-sans" id="app_footer">
         <div className="max-w-7xl mx-auto px-4 space-y-2">
           <p className="font-semibold text-slate-400">
-            Hero's Essay Blueprint — Crafted to guide reflective application drafting.
+            The Essay Loom — Crafted to guide reflective application drafting.
           </p>
           <p className="text-[15px] sm:text-base text-slate-500">
             Based on the combined screenwriting frameworks of Joseph Campbell's Hero's Journey and Pixar Animation Studios.
@@ -675,6 +685,12 @@ export default function Editor() {
           </div>
         </div>
       )}
+
+      <FeedbackModal 
+        isOpen={isFeedbackOpen} 
+        onClose={() => setIsFeedbackOpen(false)} 
+        contextData={`Tab: ${activeTab}, Draft: ${activeDraft?.title || 'Unknown'}`}
+      />
   </>
   );
 }

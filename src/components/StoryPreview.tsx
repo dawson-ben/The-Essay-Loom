@@ -55,13 +55,13 @@ export default function StoryPreview({ draft, onUpdateDraft }: StoryPreviewProps
     });
 
     if (draft.blocks && draft.blocks.length > 0) {
-      // Re-order based on saved blocks, overriding the orderIndex
+      // Re-order based on saved blocks array index
       const ordered = rawSegments.sort((a, b) => {
-        const blockA = draft.blocks?.find(bck => bck.type === a.id);
-        const blockB = draft.blocks?.find(bck => bck.type === b.id);
-        const aIndex = blockA ? blockA.orderIndex : a.orderIndex;
-        const bIndex = blockB ? blockB.orderIndex : b.orderIndex;
-        return aIndex - bIndex;
+        const aIndex = draft.blocks?.findIndex(bck => bck.promptId === a.id) ?? -1;
+        const bIndex = draft.blocks?.findIndex(bck => bck.promptId === b.id) ?? -1;
+        const finalAIndex = aIndex !== -1 ? aIndex : (a.orderIndex + 100);
+        const finalBIndex = bIndex !== -1 ? bIndex : (b.orderIndex + 100);
+        return finalAIndex - finalBIndex;
       });
       setSegments(ordered);
     } else {
@@ -76,11 +76,16 @@ export default function StoryPreview({ draft, onUpdateDraft }: StoryPreviewProps
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    const newBlocks = (items as Segment[]).map((item, index) => ({
-      type: item.id,
-      orderIndex: index,
-      content: item.val
-    }));
+    const newBlocks: import('../types').EssayBlock[] = (items as Segment[]).map((item) => {
+      const existingBlock = draft.blocks?.find(bck => bck.promptId === item.id);
+      return existingBlock || {
+        id: item.id,
+        promptId: item.id,
+        title: item.label,
+        description: '',
+        content: item.val
+      };
+    });
 
     setSegments(items);
     onUpdateDraft({ ...draft, blocks: newBlocks });

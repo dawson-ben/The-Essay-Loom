@@ -30,7 +30,7 @@ export const CHARACTER_GUIDES: CharacterGuide[] = [
   },
   {
     id: "diy_pole_vaulter",
-    name: "DIY Pole Vaulter (Student Essay)",
+    name: "DIY Pole Vaulter (Example Essay)",
     category: "Academic",
     beats: {
       story_selection: "Building a backyard vaulting rig",
@@ -51,7 +51,7 @@ export const CHARACTER_GUIDES: CharacterGuide[] = [
   },
   {
     id: "garage_mechanic",
-    name: "The Torque Wrench Key (Student Essay)",
+    name: "The Torque Wrench Key (Example Essay)",
     category: "Academic",
     beats: {
       story_selection: "Fixing a van to give away",

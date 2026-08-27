@@ -38,7 +38,7 @@ export default function Login() {
           </div>
         </div>
         
-        <h2 className="text-3xl font-serif text-white mb-2 mt-8">Hero's Essay Blueprint</h2>
+        <h2 className="text-3xl font-serif text-white mb-2 mt-8">The Essay Loom</h2>
         <p className="text-slate-400 mb-8 font-sans text-sm">
           A rigorous framework for drafting compelling, narrative-driven personal statements, free from generative AI.
         </p>

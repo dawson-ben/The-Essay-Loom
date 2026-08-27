@@ -32,7 +32,8 @@ export interface EssayBlock {
   subtitle?: string;         
   description: string;   
   content: string;
-  draftText?: string;       
+  draftText?: string;
+  brainstormedTopics?: string;       
   isStuck?: boolean;
   microAnswers?: MicroAnswer[];     
   activeTool?: CinematicToolType;   

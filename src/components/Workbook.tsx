@@ -84,7 +84,12 @@ export default function Workbook({
   const handleSaveExcavator = (topic: string) => {
     setIsExcavatorOpen(false);
     if (activeBlockId) {
-      updateActiveBlock({ content: topic });
+      const newBlocks = blocks.map(b => b.id === activeBlockId ? { ...b, brainstormedTopics: topic } : b);
+      setBlocks(newBlocks);
+      const newScratchpad = activeDraft.scratchpad 
+        ? activeDraft.scratchpad + '\n\n--- Brainstormed Topics ---\n' + topic 
+        : '--- Brainstormed Topics ---\n' + topic;
+      onUpdateDraft({ ...activeDraft, blocks: newBlocks, scratchpad: newScratchpad });
     }
   };
 
@@ -384,11 +389,25 @@ export default function Workbook({
                   />
                 )}
                 
+                {activeBlock.brainstormedTopics && (
+                  <div className="bg-slate-900 border border-amber-500/20 rounded-xl p-4 mt-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Lightbulb className="w-4 h-4 text-amber-500" />
+                      <h4 className="text-sm font-sans font-bold text-amber-400">Brainstormed Ideas</h4>
+                    </div>
+                    <div className="text-sm font-sans text-slate-300 whitespace-pre-wrap leading-relaxed">
+                      {activeBlock.brainstormedTopics}
+                    </div>
+                  </div>
+                )}
+                
                 {/* Tools Footer */}
                 {activePrompt?.tools && activePrompt.tools.length > 0 && (
                   <div className="flex justify-between items-center flex-wrap gap-4">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-sans font-medium text-slate-600 select-none">✨ Show this using a Cinematic Tool:</span>
+                      {(activePrompt.tools.includes('montage') || activePrompt.tools.includes('bullet_time')) && (
+                        <span className="text-sm font-sans font-medium text-slate-600 select-none">✨ Show this using a Cinematic Tool:</span>
+                      )}
                       
                       {activePrompt.tools.includes('montage') && (
                         <button
@@ -413,13 +432,24 @@ export default function Workbook({
                       )}
                     </div>
                     
-                    <button
-                      onClick={() => updateActiveBlock({ isStuck: true })}
-                      className="flex items-center gap-2 text-sm font-sans font-medium text-slate-500 hover:text-amber-400 transition-colors px-2 py-1"
-                    >
+                    <div className="flex items-center gap-4">
+                      {activePrompt.tools.includes('excavator') && (
+                        <button
+                          onClick={() => setIsExcavatorOpen(true)}
+                          className="flex items-center gap-2 text-sm font-sans font-bold text-amber-500 hover:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 px-3 py-1.5 rounded-lg transition-colors"
+                        >
+                          <Lightbulb className="w-4 h-4" />
+                          Brainstorm Topics
+                        </button>
+                      )}
+                      <button
+                        onClick={() => updateActiveBlock({ isStuck: true })}
+                        className="flex items-center gap-2 text-sm font-sans font-medium text-slate-500 hover:text-amber-400 transition-colors px-2 py-1"
+                      >
                       <Wand2 className="w-4 h-4" />
                       I'm stuck. Ask me a different way.
                     </button>
+                    </div>
                   </div>
                 )}
                 

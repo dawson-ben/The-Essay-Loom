@@ -1,5 +1,5 @@
 {
-  "name": "Hero's Essay Blueprint",
+  "name": "The Essay Loom",
   "description": "An interactive workbook and personal statement planner using the Hero's Journey and Pixar Storytelling principles to structure compelling college essays.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

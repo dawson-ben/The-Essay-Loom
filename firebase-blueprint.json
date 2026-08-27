@@ -26,12 +26,28 @@
         "updatedAt": { "type": "timestamp" }
       },
       "required": ["userId", "title", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "Feedback": {
+      "title": "User Feedback",
+      "description": "Feedback submitted by users.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "text": { "type": "string", "maxLength": 5000 },
+        "context": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "text", "context", "createdAt"]
     }
   },
   "firestore": {
     "users/{userId}/essays/{essayId}": {
       "schema": { "$ref": "#/entities/Essay" },
       "description": "Stores user drafts."
+    },
+    "feedbacks/{feedbackId}": {
+      "schema": { "$ref": "#/entities/Feedback" },
+      "description": "Stores user feedback."
     }
   }
 }

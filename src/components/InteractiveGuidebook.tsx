@@ -44,7 +44,7 @@ const CHAPTERS: Chapter[] = [
       <>
         <p>In his famous 1949 book <em>The Hero with a Thousand Faces</em>, literature professor Joseph Campbell identified a pattern in great stories that spans cultures and centuries. It operates like a universal rhythm—a specific sequence of narrative beats proven to capture and hold human attention.</p>
         
-        <p>When you hear "The Hero's Journey," you might imagine classic fantasy novels, blockbuster movies, or epic quests to save the world. But we can use this same pattern to tell the quiet, "everyday" stories of our lives with resonant power, too. It is the exact same engine that drives stories about small moments of personal growth, overcoming a private fear, or shifting your perspective. You don't need to have fought a literal dragon to use this roadmap.</p>
+        <p>When you hear "The Hero's Journey," you might imagine classic fantasy novels, blockbuster movies, or epic quests to save the world. But you don't need to have fought a literal dragon to use this roadmap. The very same narrative engine can help you tell the quiet, "everyday" stories of personal growth, overcoming private fears, or shifting perspectives in your life with resonant power, too.</p>
         
         <p>You don’t need to invent a new structure from scratch; you just need to map your truth onto these proven narrative beats.</p>
       </>
@@ -283,7 +283,7 @@ export default function InteractiveGuidebook() {
   const [selectedSubversion, setSelectedSubversion] = useState<string>('failed_ordeal');
 
   // Chapter 5 interactive reorder
-  const [selectedStructuralPattern, setSelectedStructuralPattern] = useState<string>('medias_res');
+  const [selectedStructuralPattern, setSelectedStructuralPattern] = useState<string>('hj-chronological');
 
   const toggleCharSelection = (id: string) => {
     if (selectedChars.includes(id)) {
@@ -880,166 +880,151 @@ export default function InteractiveGuidebook() {
                         {/* Structural switch layout pills */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                           <button
-                            onClick={() => setSelectedStructuralPattern('chronological')}
-                            className={getTabClass(selectedStructuralPattern === 'chronological')}
+                            onClick={() => setSelectedStructuralPattern('hj-chronological')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-chronological')}
                           >
                             Timeline Chain
                           </button>
                           <button
-                            onClick={() => setSelectedStructuralPattern('medias_res')}
-                            className={getTabClass(selectedStructuralPattern === 'medias_res')}
+                            onClick={() => setSelectedStructuralPattern('hj-in-media-res')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-in-media-res')}
                           >
-                            In Medias Res
+                            In Media Res
                           </button>
                           <button
-                            onClick={() => setSelectedStructuralPattern('elixir_hook')}
-                            className={getTabClass(selectedStructuralPattern === 'elixir_hook')}
-                          >
-                            Elixir Hook
-                          </button>
-                          <button
-                            onClick={() => setSelectedStructuralPattern('post_mortem')}
-                            className={getTabClass(selectedStructuralPattern === 'post_mortem')}
+                            onClick={() => setSelectedStructuralPattern('hj-post-mortem')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-post-mortem')}
                           >
                             The Post-Mortem
                           </button>
                           <button
-                            onClick={() => setSelectedStructuralPattern('catalyst_anchor')}
-                            className={getTabClass(selectedStructuralPattern === 'catalyst_anchor')}
+                            onClick={() => setSelectedStructuralPattern('hj-catalyst-anchor')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-catalyst-anchor')}
                           >
                             The Catalyst Anchor
                           </button>
                           <button
-                            onClick={() => setSelectedStructuralPattern('reluctant_hook')}
-                            className={getTabClass(selectedStructuralPattern === 'reluctant_hook')}
+                            onClick={() => setSelectedStructuralPattern('hj-reluctant-hook')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-reluctant-hook')}
                           >
                             The Reluctant Hook
                           </button>
                           <button
-                            onClick={() => setSelectedStructuralPattern('parallel_track')}
-                            className={getTabClass(selectedStructuralPattern === 'parallel_track')}
+                            onClick={() => setSelectedStructuralPattern('hj-parallel-track')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-parallel-track')}
                           >
                             The Parallel Track
                           </button>
+                          <button
+                            onClick={() => setSelectedStructuralPattern('hj-sudden-setback')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-sudden-setback')}
+                          >
+                            Sudden Setback
+                          </button>
+                          <button
+                            onClick={() => setSelectedStructuralPattern('hj-student-passion')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-student-passion')}
+                          >
+                            Student Meets Passion
+                          </button>
+                          <button
+                            onClick={() => setSelectedStructuralPattern('hj-cinderella')}
+                            className={getTabClass(selectedStructuralPattern === 'hj-cinderella')}
+                          >
+                            Cinderella
+                          </button>
                         </div>
 
-                        {/* Interactive structural timeline map visualization */}
-                        {selectedStructuralPattern === 'chronological' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
+                        {selectedStructuralPattern === 'hj-chronological' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80">
                               <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">1. Ordinary World</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Catalyst/Incident</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Trial/Ordeal</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Transformation Elixir</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Inciting Incident</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3.5 py-1.5 bg-amber-900/35 border border-amber-700 text-amber-400 rounded-lg text-center font-bold shadow-sm">3. The Ordeal</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. The Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Standard Chronological Pattern</h5>
                               <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
-                                The standard progression (Ordinary World ➔ Inciting Incident ➔ Rising Action ➔ Ordeal ➔ Elixir). This is excellent for clear, step-by-step psychological growth stories. Readers can follow your trial sequences easily.
+                                The classic timeline. You start in your comfort zone, get pulled into a new challenge, and face your ordeal at the climax. This is excellent for clear, step-by-step psychological growth stories. Readers can follow your trial sequences easily.
                               </p>
                             </div>
                           </div>
                         )}
 
-                        {selectedStructuralPattern === 'medias_res' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
+                        {selectedStructuralPattern === 'hj-in-media-res' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80">
-                              <span className="px-3.5 py-1.5 bg-blue-900/35 border border-blue-700 hover:border-blue-500 text-blue-100 rounded-lg text-center font-extrabold shadow">1. Ordeal / Climax (Hook)</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
+                              <span className="px-3.5 py-1.5 bg-blue-900/35 border border-blue-700 text-blue-100 rounded-lg text-center font-extrabold shadow">1. Ordeal / Climax (Hook)</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
                               <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World (Flashback)</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
+                              <span className="text-slate-500 hidden sm:block">➔</span>
                               <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Catalyst/Action</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir Resolution</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir</span>
                             </div>
                             <div className="space-y-1">
-                              <h5 className="font-bold text-slate-200">In Medias Res (The Action Hook)</h5>
+                              <h5 className="font-bold text-slate-200">In Media Res (The Action Hook)</h5>
                               <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
-                                Start immediately with the sensory elements of the Ordeal/Climax. Once the reader is hooked by the present-day active tension, flash back to the Ordinary World to provide context, then catch back up to the resolution.
+                                Start right in the middle of the chaos. Open with your biggest complication, then flash back to how you got there. Gripping from the first sentence.
                               </p>
                             </div>
                           </div>
                         )}
 
-                        {selectedStructuralPattern === 'elixir_hook' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
-                            <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80">
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">1. Present-Day Elixir Hook</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World (Start)</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Trial Run & Ordeal</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Completed Arc Summary</span>
-                            </div>
-                            <div className="space-y-1">
-                              <h5 className="font-bold text-slate-200">The Elixir Hook</h5>
-                              <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
-                                Open by giving us a whiff of the Elixir—a definitive, present-day statement of your transformation (e.g., <em>"I am the king of four-square"</em> in an essay about creating an inclusive community). Then, loop back to the beginning to tell the story of how that identity was forged.
-                              </p>
-                            </div>
-                          </div>
-                        )}
-
-                        {selectedStructuralPattern === 'post_mortem' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
+                        {selectedStructuralPattern === 'hj-post-mortem' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
-                              <span className="px-3 py-1.5 bg-rose-900/30 border border-rose-800/50 text-rose-400 rounded-lg text-center font-bold shadow-sm">1. Ordeal (The Failure)</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Incident (The Rebuild)</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Special World</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">4. Winning Action</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Elixir</span>
+                              <span className="px-3.5 py-1.5 bg-rose-900/35 border border-rose-700 text-rose-100 rounded-lg text-center font-extrabold shadow-sm">1. Failed Ordeal (Hook)</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Inciting Incident</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Unfamiliar World</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir</span>
                             </div>
                             <div className="space-y-1">
-                              <h5 className="font-bold text-slate-200">The Post-Mortem (The Failed Ordeal First)</h5>
+                              <h5 className="font-bold text-slate-200">The Post-Mortem (Failed Ordeal First)</h5>
                               <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
-                                Instead of starting with action, open on the immediate aftermath of a total collapse or failure. The essay starts with the sting of defeat, then flashes back to show how you rebuilt your approach to tackle the problem a second time. This is the ultimate "Resilience Story" structure.
+                                Opens with the aftermath of failure. The essay starts with the sting of defeat, then flashes back to show how you rebuilt your approach to tackle the problem a second time. This is the ultimate "Resilience Story" structure.
                               </p>
                             </div>
                           </div>
                         )}
 
-                        {selectedStructuralPattern === 'catalyst_anchor' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
+                        {selectedStructuralPattern === 'hj-catalyst-anchor' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
                               <span className="px-3 py-1.5 bg-amber-900/30 border border-amber-800/50 text-amber-400 rounded-lg text-center font-bold shadow-sm">1. Catalyst (Object/Memory)</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
+                              <span className="text-slate-500 hidden sm:block">➔</span>
                               <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Incident & Ordeal</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">4. Winning Action</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Elixir</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Ordeal</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Catalyst Anchor (The Object Lesson)</h5>
                               <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
-                                Open with a hyper-focus on a specific physical object, a core memory, or a piece of advice. The reader is introduced to this "Talisman" first. The narrative then zooms out, progressing until the Ordeal, where that exact object or memory is deployed to save the day. Works brilliantly for the "Intellectual Journey" track.
+                                Open with a hyper-focus on a specific physical object, a core memory, or a piece of advice. The narrative then zooms out, progressing until the Ordeal, where that exact object or memory is deployed to save the day. Works brilliantly for the "Intellectual Journey" track.
                               </p>
                             </div>
                           </div>
                         )}
 
-                        {selectedStructuralPattern === 'reluctant_hook' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
+                        {selectedStructuralPattern === 'hj-reluctant-hook' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
                               <span className="px-3 py-1.5 bg-teal-900/30 border border-teal-800/50 text-teal-400 rounded-lg text-center font-bold shadow-sm">1. Doubts & Hesitation</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
+                              <span className="text-slate-500 hidden sm:block">➔</span>
                               <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Ordinary World</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Incident</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">4. Commitment & Ordeal</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Elixir</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">3. Ordeal</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Reluctant Hook (Starting with Hesitation)</h5>
@@ -1050,20 +1035,16 @@ export default function InteractiveGuidebook() {
                           </div>
                         )}
 
-                        {selectedStructuralPattern === 'parallel_track' && (
-                          <div className="space-y-4 animate-fade-in font-sans text-sm">
+                        {selectedStructuralPattern === 'hj-parallel-track' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
                             <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
-                              <span className="px-3 py-1.5 bg-purple-900/30 border border-purple-800/50 text-purple-400 rounded-lg text-center font-bold shadow-sm">1. Ordinary World A</span>
-                              <span className="text-slate-500">vs</span>
-                              <span className="px-3 py-1.5 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 rounded-lg text-center font-bold shadow-sm">2. Special World B</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-purple-900/30 border border-purple-800/50 text-purple-400 rounded-lg text-center font-bold shadow-sm">3. Incident A</span>
-                              <span className="text-slate-500">vs</span>
-                              <span className="px-3 py-1.5 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 rounded-lg text-center font-bold shadow-sm">4. Ordeal B</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">5. Convergence</span>
-                              <MoveRight className="w-4 h-4 text-blue-500 shrink-0 hidden sm:block" />
-                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">6. Elixir</span>
+                              <span className="px-3 py-1.5 bg-purple-900/30 border border-purple-800/50 text-purple-400 rounded-lg text-center font-bold shadow-sm">1. Ordinary World A vs B</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-emerald-900/30 border border-emerald-800/50 text-emerald-400 rounded-lg text-center font-bold shadow-sm">2. Incident A vs Ordeal B</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">3. Convergence</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir</span>
                             </div>
                             <div className="space-y-1">
                               <h5 className="font-bold text-slate-200">The Parallel Track (The Dual Timeline)</h5>
@@ -1073,9 +1054,68 @@ export default function InteractiveGuidebook() {
                             </div>
                           </div>
                         )}
+
+                        {selectedStructuralPattern === 'hj-sudden-setback' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
+                            <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">1. Ordinary World</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Inciting Incident</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3.5 py-1.5 bg-rose-900/35 border border-rose-700 text-rose-100 rounded-lg text-center font-extrabold shadow-sm">3. The Ordeal</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Winning Action</span>
+                            </div>
+                            <div className="space-y-1">
+                              <h5 className="font-bold text-slate-200">Sudden Setback</h5>
+                              <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
+                                A character falls into a crisis and claws their way out. The Ordeal hits hard and early, making the essay about the grueling, deliberate process of climbing out of the hole, rather than building up to the fall.
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedStructuralPattern === 'hj-student-passion' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
+                            <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">1. Inciting Incident (Meeting the passion)</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Unfamiliar World</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3.5 py-1.5 bg-amber-900/35 border border-amber-700 text-amber-400 rounded-lg text-center font-bold shadow-sm">3. The Ordeal (Burnout/Competition)</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Elixir</span>
+                            </div>
+                            <div className="space-y-1">
+                              <h5 className="font-bold text-slate-200">Student Meets Passion</h5>
+                              <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
+                                Finding a passion, losing it to burnout/competition, and rebuilding it on healthier, more mature terms. Excellent for tracing the evolution of a hobby or academic interest over several years.
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {selectedStructuralPattern === 'hj-cinderella' && (
+                          <div className="space-y-4 animate-fade-in font-sans text-sm mt-4">
+                            <div className="flex flex-col sm:flex-row items-center gap-2 justify-center py-4 bg-slate-950 rounded-xl border border-slate-855/80 flex-wrap">
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">1. Ordinary World</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-center font-medium shadow-sm">2. Unfamiliar World (False Peak)</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3.5 py-1.5 bg-rose-900/35 border border-rose-700 text-rose-100 rounded-lg text-center font-extrabold shadow-sm">3. The Ordeal (Rock Bottom)</span>
+                              <span className="text-slate-500 hidden sm:block">➔</span>
+                              <span className="px-3 py-1.5 bg-blue-900/30 border border-blue-800/50 text-blue-400 rounded-lg text-center font-bold shadow-sm">4. Winning Action (True Peak)</span>
+                            </div>
+                            <div className="space-y-1">
+                              <h5 className="font-bold text-slate-200">Cinderella (The False Peak)</h5>
+                              <p className="text-slate-450 text-slate-400 leading-relaxed font-normal">
+                                An initial unearned rise, a devastating fall to rock bottom, and a final earned rise. Shows humility, resilience, and the difference between superficial success and deep mastery.
+                              </p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
-
                   </div>
         </div>
 

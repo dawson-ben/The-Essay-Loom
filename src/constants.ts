@@ -169,7 +169,7 @@ export const HEROS_JOURNEY_PROMPTS: PromptField[] = [
   },
   { 
     id: 'essential_belief', 
-    label: 'The Elixir (Your Perspective)', // Updated as discussed previously
+    label: 'The Elixir', // Updated as discussed previously
     subtitle: 'What is your essential belief?', 
     description: 'The Elixir is the deeper lesson, mindset, or new worldview that you now carry with you.', 
     placeholder: 'e.g. "Messy discovery is stickier than a tidy lecture..."', 
@@ -181,7 +181,7 @@ export const HEROS_JOURNEY_PROMPTS: PromptField[] = [
     subtitle: 'How will you apply this wisdom?', 
     description: 'How do you or will you apply this earned wisdom to benefit your classmates, family, community, or the world?', 
     placeholder: 'e.g., "I bring this experimental, Saturday-engineering mindset to your materials research labs..."', 
-    tip: 'Connect your internal change to your actions at college. Frame it as an active promise of character.', 
+    tip: 'Connect your internal change to how you live today and your future actions at college. Frame it as an active promise of character.', 
     tools: ['montage'] 
   },
 
