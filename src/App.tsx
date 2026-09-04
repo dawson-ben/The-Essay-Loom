@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import Login from './components/Login';
 import Editor from './components/Editor';
+import Footer from './components/Footer';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
+import About from './components/About';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -20,6 +24,17 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   return user ? <>{children}</> : null;
+}
+
+function NonWorkspaceLayout() {
+  return (
+    <div className="min-h-screen flex flex-col bg-[#070B14]">
+      <div className="flex-1 flex flex-col">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
 }
 
 export default function App() {
@@ -40,7 +55,12 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route element={<NonWorkspaceLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+      </Route>
       <Route path="/" element={<Editor />} />
       <Route path="/dashboard" element={<Editor />} />
       <Route path="/essay/:id/:tab" element={<Editor />} />

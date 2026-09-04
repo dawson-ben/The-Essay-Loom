@@ -33,7 +33,7 @@ export default function Workbook({
   
   const [isExcavatorOpen, setIsExcavatorOpen] = useState(false);
   const [showBrainstormChoice, setShowBrainstormChoice] = useState(() => {
-    return activeDraft.blocks.length === 0 || activeDraft.blocks.every(b => !b.content && (!b.microAnswers || b.microAnswers.every(m => !m.answer)));
+    return !activeDraft.blocks || activeDraft.blocks.length === 0 || activeDraft.blocks.every(b => !b.content && (!b.microAnswers || b.microAnswers.every(m => !m.answer)));
   });
 
   useEffect(() => {

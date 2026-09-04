@@ -6,10 +6,11 @@ import AssemblyBoard from './AssemblyBoard';
 import Handbook from './Handbook';
 import Scratchpad from './Scratchpad';
 import InteractiveGuidebook from './InteractiveGuidebook';
-import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp, MessageSquare } from 'lucide-react';
+import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp, MessageSquare, Settings } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { fetchEssays, createEssay, updateEssay, deleteEssay } from '../db';
 import FeedbackModal from './FeedbackModal';
+import SettingsModal from './SettingsModal';
 
 export default function Editor() {
   const { user, logout } = useAuth();
@@ -23,6 +24,7 @@ export default function Editor() {
   const [isScratchpadOpen, setIsScratchpadOpen] = useState(false);
   const [isGuidebookOpen, setIsGuidebookOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDark, setIsDark] = useState<boolean>(() => {
     const saved = localStorage.getItem('college_essay_architect_theme');
     return saved !== 'light';
@@ -429,6 +431,16 @@ export default function Editor() {
             <MessageSquare className="w-4 h-4" />
           </button>
 
+          {user && (
+            <button
+              onClick={() => setIsSettingsOpen(true)}
+              className="p-2.5 bg-slate-950 hover:bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 rounded-lg transition-all cursor-pointer shadow-sm"
+              title="Account Settings"
+            >
+              <Settings className="w-4 h-4" />
+            </button>
+          )}
+
           {user ? (
             <button
               onClick={logout}
@@ -690,6 +702,11 @@ export default function Editor() {
         isOpen={isFeedbackOpen} 
         onClose={() => setIsFeedbackOpen(false)} 
         contextData={`Tab: ${activeTab}, Draft: ${activeDraft?.title || 'Unknown'}`}
+      />
+
+      <SettingsModal 
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
       />
   </>
   );

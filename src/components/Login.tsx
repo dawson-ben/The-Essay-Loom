@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { Shield, Sparkles, AlertTriangle } from 'lucide-react';
 
+import { Link } from 'react-router-dom';
+
 export default function Login() {
   const { login } = useAuth();
   const [dob, setDob] = useState('');
@@ -29,13 +31,13 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070B14] flex flex-col items-center justify-center p-4">
+    <div className="flex-1 flex flex-col items-center justify-center p-4">
       <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4">
-          <div className="flex items-center gap-2 bg-teal-950/40 text-teal-300 border border-teal-800/60 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide">
+          <Link to="/about" className="flex items-center gap-2 bg-teal-950/40 hover:bg-teal-900/60 text-teal-300 border border-teal-800/60 hover:border-teal-700/80 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide transition-colors">
             <Shield className="w-3.5 h-3.5" />
             100% Human-Authored
-          </div>
+          </Link>
         </div>
         
         <h2 className="text-3xl font-serif text-white mb-2 mt-8">The Essay Loom</h2>
