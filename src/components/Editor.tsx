@@ -6,7 +6,7 @@ import AssemblyBoard from './AssemblyBoard';
 import Handbook from './Handbook';
 import Scratchpad from './Scratchpad';
 import InteractiveGuidebook from './InteractiveGuidebook';
-import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp, MessageSquare, Settings } from 'lucide-react';
+import { BookOpen, FileEdit, LayoutList, FileText, Compass, Sparkles, Plus, Trash2, GraduationCap, Sun, Moon, LogOut, Cloud, CloudOff, PenTool, Copy, RefreshCcw, AlertTriangle, X, TrendingUp, MessageSquare, Settings, Megaphone } from 'lucide-react';
 import { useAuth } from '../AuthContext';
 import { fetchEssays, createEssay, updateEssay, deleteEssay } from '../db';
 import FeedbackModal from './FeedbackModal';
@@ -422,6 +422,17 @@ export default function Editor() {
           >
             <RefreshCcw className="w-4 h-4" />
           </button>
+
+          <a
+            href="https://forms.gle/w4QyBp4GPnjGH6eo8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-2 bg-indigo-950/40 hover:bg-indigo-900/60 text-indigo-400 hover:text-indigo-300 border border-indigo-800/50 hover:border-indigo-700/80 rounded-lg transition-all cursor-pointer flex items-center gap-2 shrink-0 shadow-sm"
+            title="Beta Feedback"
+          >
+            <Megaphone className="w-4 h-4" />
+            <span className="hidden sm:inline text-sm font-sans font-bold">Beta Feedback</span>
+          </a>
 
           <button
             onClick={() => setIsFeedbackOpen(true)}
