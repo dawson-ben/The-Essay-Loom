@@ -62,6 +62,16 @@ const seq2: Action[] = [
 const seq3: Action[] = [
   { type: 'TYPE', text: '"Be the change you wish to see in the world." - Mahatm' },
   { type: 'WAIT', ms: 150 },
+  { type: 'TYPE', text: 'a Gahnd' },
+  { type: 'WAIT', ms: 250 },
+  { type: 'BACKSPACE', count: 5, speedMs: 40 },
+  { type: 'WAIT', ms: 150 },
+  { type: 'TYPE', text: 'Ghand' },
+  { type: 'WAIT', ms: 250 },
+  { type: 'BACKSPACE', count: 5, speedMs: 40 },
+  { type: 'WAIT', ms: 150 },
+  { type: 'TYPE', text: 'G.' },
+  { type: 'WAIT', ms: 400 },
   { type: 'MOVE_END' },
   { type: 'BACKSPACE', count: 150, speedMs: 2 },
   { type: 'WAIT', ms: 150 },
@@ -250,6 +260,57 @@ const seq12: Action[] = [
   { type: 'WAIT', ms: 400 },
 ];
 
+const seq13: Action[] = [
+  { type: 'TYPE', text: 'My kid is an incredibly gifted ' },
+  { type: 'WAIT', ms: 400 },
+  { type: 'MOVE_END' },
+  { type: 'BACKSPACE', count: 31, speedMs: 15 },
+  { type: 'WAIT', ms: 200 },
+  { type: 'TYPE', text: 'I am a pretty good ' },
+  { type: 'WAIT', ms: 500 },
+  { type: 'MOVE_END' },
+  { type: 'BACKSPACE', count: 150, speedMs: 2 },
+  { type: 'WAIT', ms: 400 },
+];
+
+const seq14: Action[] = [
+  { type: 'TYPE', text: 'Dear College Admissions Committee,' },
+  { type: 'WAIT', ms: 300 },
+  { type: 'MOVE_END' },
+  { type: 'BACKSPACE', count: 150, speedMs: 5 },
+  { type: 'WAIT', ms: 200 },
+  { type: 'TYPE', text: 'To Whom It May Concern:' },
+  { type: 'WAIT', ms: 300 },
+  { type: 'MOVE_END' },
+  { type: 'BACKSPACE', count: 150, speedMs: 5 },
+  { type: 'WAIT', ms: 200 },
+  { type: 'TYPE', text: 'What up, Stanford person.' },
+  { type: 'WAIT', ms: 500 },
+  { type: 'MOVE_END' },
+  { type: 'BACKSPACE', count: 150, speedMs: 2 },
+  { type: 'WAIT', ms: 400 },
+];
+
+const seq15: Action[] = [
+  { type: 'TYPE', text: 'I am a motivated student.' },
+  { type: 'WAIT', ms: 250 },
+  { type: 'SELECT', start: 7, end: 7 },
+  { type: 'WAIT', ms: 150 },
+  { type: 'TYPE', text: 'highly ' },
+  { type: 'WAIT', ms: 150 },
+  { type: 'SELECT', start: 7, end: 7 },
+  { type: 'WAIT', ms: 150 },
+  { type: 'TYPE', text: 'extremely and ' },
+  { type: 'WAIT', ms: 150 },
+  { type: 'SELECT', start: 7, end: 7 },
+  { type: 'WAIT', ms: 150 },
+  { type: 'TYPE', text: 'very uniquely, ' },
+  { type: 'WAIT', ms: 600 },
+  { type: 'MOVE_END' },
+  { type: 'BACKSPACE', count: 150, speedMs: 2 },
+  { type: 'WAIT', ms: 400 },
+];
+
 const penultimateSeq: Action[] = [
   { type: 'TYPE', text: 'I stared at the blinking cursor.' },
   { type: 'WAIT', ms: 300 },
@@ -285,7 +346,7 @@ const finalSeq: Action[] = [
   { type: 'WAIT', ms: 400 }
 ];
 
-const ALL_SEQUENCES = [seq1, seq2, seq3, seq4, seq5, seq6, seq7, seq8, seq9, seq10, seq11, seq12];
+const ALL_SEQUENCES = [seq1, seq2, seq3, seq4, seq5, seq6, seq7, seq8, seq9, seq10, seq11, seq12, seq13, seq14, seq15];
 
 export default function ColdOpen({ onComplete }: ColdOpenProps) {
   const charsRef = useRef<Char[]>([]);
