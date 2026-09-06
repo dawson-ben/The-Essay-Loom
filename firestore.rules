@@ -1,57 +1,41 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    
+    function isAuthenticated() {
+      return request.auth != null;
     }
     
-    function isSignedIn() { return request.auth != null; }
-    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
-    function incoming() { return request.resource.data; }
-    function existing() { return resource.data; }
-    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
-    
-    function isValidEssay(data, uid) {
-      return data.keys().hasAll(['userId', 'title', 'createdAt', 'updatedAt', 'schemaVersion']) &&
-             data.userId == uid &&
-             data.schemaVersion == 1 &&
-             data.title is string && data.title.size() <= 200;
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
     }
 
-    function isValidFeedback(data, uid) {
-      return data.keys().hasAll(['userId', 'text', 'context', 'createdAt']) &&
-             data.keys().size() == 4 &&
-             data.userId == uid &&
-             data.text is string && data.text.size() > 0 && data.text.size() <= 5000 &&
-             data.context is string && data.context.size() <= 200 &&
-             data.createdAt == request.time;
+    // Match user document and all subcollections including /users/{userId}/essays/{essayId}
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      match /{allSubcollections=**} {
+        allow read, write: if isOwner(userId);
+      }
     }
 
+    // Explicit direct path for user essays
     match /users/{userId}/essays/{essayId} {
-      allow read: if isOwner(userId);
-      allow delete: if isOwner(userId);
-      allow create: if isOwner(userId) &&
-        isValidId(essayId) &&
-        isValidEssay(incoming(), userId) &&
-        incoming().createdAt == request.time &&
-        incoming().updatedAt == request.time;
-      
-      allow update: if isOwner(userId) &&
-        isValidEssay(incoming(), userId) &&
-        incoming().updatedAt == request.time &&
-        (
-          incoming().diff(existing()).affectedKeys().hasOnly([
-            'title', 'targetWordCount', 'track', 'herosJourneyAnswers', 'differentTruthfulAnswers',
-            'intellectualJourneyAnswers', 'blocks', 'montageElements', 'scratchpad', 'updatedAt'
-          ])
-        );
+      allow read, write: if isOwner(userId);
     }
 
+    // Root-level essays collection (safety fallback)
+    match /essays/{essayId} {
+      allow read, update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+    }
+
+    // User feedback
     match /feedbacks/{feedbackId} {
-      allow create: if isSignedIn() &&
-        isValidId(feedbackId) &&
-        isValidFeedback(incoming(), request.auth.uid);
+      allow create: if isAuthenticated();
       allow read, update, delete: if false;
     }
   }
 }
+

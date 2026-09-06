@@ -52,73 +52,99 @@ export default function Editor() {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      if (user) {
-        const data = await fetchEssays(user.uid);
-        if (data.length > 0) {
-          setDrafts(data);
+      try {
+        if (user) {
+          let data: EssayDraft[] = [];
+          try {
+            data = await fetchEssays(user.uid);
+          } catch (fetchErr) {
+            console.error('Failed to fetch user essays from Firestore:', fetchErr);
+          }
+
+          if (data && data.length > 0) {
+            setDrafts(data);
+            const needsGuidebookRoute = localStorage.getItem('college_essay_architect_route_to_guidebook') === 'true';
+            const targetTab = needsGuidebookRoute ? 'guidebook' : (tab || 'worksheet');
+            if (needsGuidebookRoute) {
+              localStorage.removeItem('college_essay_architect_route_to_guidebook');
+            }
+            if (id && data.some(d => d.id === id)) {
+              setActiveDraftId(id);
+              if (needsGuidebookRoute) {
+                navigate(`/essay/${id}/guidebook`, { replace: true });
+              }
+            } else {
+              setActiveDraftId(data[0].id);
+              navigate(`/essay/${data[0].id}/${targetTab}`, { replace: true });
+            }
+          } else {
+            const pendingTrackMode = localStorage.getItem('college_essay_architect_pending_track') as TrackType;
+            if (pendingTrackMode) {
+              localStorage.removeItem('college_essay_architect_pending_track');
+            }
+            const needsGuidebookRoute = localStorage.getItem('college_essay_architect_route_to_guidebook') === 'true';
+            const targetTab = needsGuidebookRoute ? 'guidebook' : 'worksheet';
+            if (needsGuidebookRoute) {
+              localStorage.removeItem('college_essay_architect_route_to_guidebook');
+            }
+            let newDraft: EssayDraft;
+            try {
+              newDraft = await createEssay(user.uid, {
+                title: 'My Personal Statement',
+                targetWordCount: 650,
+                track: pendingTrackMode || 'heros_journey',
+                herosJourneyAnswers: {},
+                differentTruthfulAnswers: {},
+                intellectualJourneyAnswers: {},
+              });
+            } catch (createErr) {
+              console.error('Failed to create initial essay in Firestore:', createErr);
+              newDraft = {
+                id: crypto.randomUUID(),
+                title: 'My Personal Statement',
+                targetWordCount: 650,
+                track: pendingTrackMode || 'heros_journey',
+                herosJourneyAnswers: {},
+                differentTruthfulAnswers: {},
+                intellectualJourneyAnswers: {},
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              };
+            }
+            setDrafts([newDraft]);
+            setActiveDraftId(newDraft.id);
+            navigate(`/essay/${newDraft.id}/${targetTab}`, { replace: true });
+          }
+        } else {
+          const localDraft: EssayDraft = {
+            id: 'guest_draft',
+            title: 'My Personal Statement',
+            targetWordCount: 650,
+            track: 'heros_journey',
+            herosJourneyAnswers: {},
+            differentTruthfulAnswers: {},
+            intellectualJourneyAnswers: {},
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+          setDrafts([localDraft]);
+          setActiveDraftId(localDraft.id);
           const needsGuidebookRoute = localStorage.getItem('college_essay_architect_route_to_guidebook') === 'true';
           const targetTab = needsGuidebookRoute ? 'guidebook' : (tab || 'worksheet');
           if (needsGuidebookRoute) {
             localStorage.removeItem('college_essay_architect_route_to_guidebook');
           }
-          if (id && data.some(d => d.id === id)) {
-            setActiveDraftId(id);
-            if (needsGuidebookRoute) {
-              navigate(`/essay/${id}/guidebook`, { replace: true });
-            }
-          } else {
-            setActiveDraftId(data[0].id);
-            navigate(`/essay/${data[0].id}/${targetTab}`, { replace: true });
-          }
-        } else {
-          const pendingTrackMode = localStorage.getItem('college_essay_architect_pending_track') as TrackType;
-          if (pendingTrackMode) {
-            localStorage.removeItem('college_essay_architect_pending_track');
-          }
-          const needsGuidebookRoute = localStorage.getItem('college_essay_architect_route_to_guidebook') === 'true';
-          const targetTab = needsGuidebookRoute ? 'guidebook' : 'worksheet';
-          if (needsGuidebookRoute) {
-            localStorage.removeItem('college_essay_architect_route_to_guidebook');
-          }
-          const newDraft = await createEssay(user.uid, {
-            title: 'My Personal Statement',
-            targetWordCount: 650,
-            track: pendingTrackMode || 'heros_journey',
-            herosJourneyAnswers: {},
-            differentTruthfulAnswers: {},
-            intellectualJourneyAnswers: {},
-          });
-          setDrafts([newDraft]);
-          setActiveDraftId(newDraft.id);
-          navigate(`/essay/${newDraft.id}/${targetTab}`, { replace: true });
+          navigate(`/essay/${localDraft.id}/${targetTab}`, { replace: true });
         }
-      } else {
-        const localDraft: EssayDraft = {
-          id: 'guest_draft',
-          title: 'My Personal Statement',
-          targetWordCount: 650,
-          track: 'heros_journey',
-          herosJourneyAnswers: {},
-          differentTruthfulAnswers: {},
-          intellectualJourneyAnswers: {},
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        };
-        setDrafts([localDraft]);
-        setActiveDraftId(localDraft.id);
-        const needsGuidebookRoute = localStorage.getItem('college_essay_architect_route_to_guidebook') === 'true';
-        const targetTab = needsGuidebookRoute ? 'guidebook' : (tab || 'worksheet');
-        if (needsGuidebookRoute) {
-          localStorage.removeItem('college_essay_architect_route_to_guidebook');
+      } catch (err) {
+        console.error('Fatal error during essay data loading:', err);
+      } finally {
+        const completed = localStorage.getItem('college_essay_architect_onboarding_completed_v2');
+        if (!completed) {
+          setShowOnboarding(true);
         }
-        navigate(`/essay/${localDraft.id}/${targetTab}`, { replace: true });
+        setLoading(false);
       }
-
-      const completed = localStorage.getItem('college_essay_architect_onboarding_completed_v2');
-      if (!completed) {
-        setShowOnboarding(true);
-      }
-      setLoading(false);
     };
     loadData();
   }, [user]);
